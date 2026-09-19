@@ -1,0 +1,1 @@
+// Three.js hero placeholder; full source is in the downloadable ZIP and can be uploaded via git client.
