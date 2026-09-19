@@ -130,3 +130,136 @@ main{min-width:0}
 .section-soft{background:#f1ece2}.profile-strip,.featured-project,.contact-banner{display:grid;grid-template-columns:1.3fr .7fr;gap:26px;align-items:center;padding:clamp(24px,4vw,42px);border:1px solid var(--line);border-radius:28px;background:var(--paper);box-shadow:0 18px 55px rgba(18,60,50,.08)}.profile-strip strong{display:block;font:700 clamp(1.5rem,3vw,2.6rem)/1.05 Georgia,serif;color:var(--forest)}.profile-strip span{display:block;color:#68746f;margin-top:8px;line-height:1.6}.featured-project{background:linear-gradient(135deg,#fffaf1,#e8e1d3)}.featured-project h3{font:700 clamp(2rem,4vw,3.8rem)/1 Georgia,serif;color:var(--forest);margin:14px 0}.featured-project p,.contact-banner p{line-height:1.75;color:#63716b}.featured-project-facts{display:grid;gap:10px}.featured-project-facts span{padding:14px;border-radius:16px;background:rgba(18,60,50,.06)}.featured-project-facts b{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;color:var(--terracotta);margin-bottom:3px}.contact-banner{background:var(--forest);color:#fff}.contact-banner h2{font:700 clamp(2rem,4vw,3.8rem)/1 Georgia,serif;margin:12px 0}.contact-banner p{color:rgba(255,255,255,.7)}.btn-outline-dark{color:var(--forest);background:#fff;border-color:#fff}.gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.gallery-card{margin:0;overflow:hidden;border-radius:24px;background:var(--paper);border:1px solid var(--line);box-shadow:0 12px 38px rgba(18,60,50,.08)}.gallery-card img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#e6e1d7}.gallery-card figcaption{padding:18px}.gallery-card h3{margin:9px 0 5px;color:var(--forest);font:700 1.35rem Georgia,serif}.gallery-card small{color:#68746f}.gallery-card p{color:#68746f;line-height:1.6}.home-gallery{margin-bottom:18px}.project-detail-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}.project-detail-grid .card p{line-height:1.75}.notice{display:grid;gap:7px}.notice strong{color:var(--forest);font-size:1.05rem}.notice span{color:#68746f;line-height:1.7}.admin-media-row{display:flex;gap:14px;align-items:center;min-width:0}.admin-media-row img{width:64px;height:48px;object-fit:cover;border-radius:10px;background:#eee}.link-button{border:0;background:none;color:var(--terracotta);font:inherit;font-weight:800;cursor:pointer;padding:0}.impact-note{margin-top:22px}.dark-section .empty.dark,.dark-section .notice{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.16);color:#fff}.dark-section .empty strong{color:#fff}.dark-section .empty span{color:rgba(255,255,255,.7)}
 @media(max-width:850px){.profile-strip,.featured-project,.contact-banner,.project-detail-grid{grid-template-columns:1fr}.gallery-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.gssks-hero{min-height:70svh}.gallery-grid{grid-template-columns:1fr}.profile-strip,.featured-project,.contact-banner{border-radius:22px}.featured-project h3{font-size:2.1rem}}
+
+/* Premium motion system — content-safe, responsive and performance-aware */
+:root{
+  --motion-ease:cubic-bezier(.22,.61,.36,1);
+  --motion-fast:220ms;
+  --motion-med:520ms;
+}
+html{scroll-padding-top:82px}
+body{background-image:radial-gradient(circle at 12% 18%,rgba(201,101,69,.035),transparent 22%),radial-gradient(circle at 88% 62%,rgba(35,59,130,.035),transparent 24%)}
+body.motion-ready main>section{
+  opacity:0;
+  transform:translate3d(0,26px,0);
+  transition:opacity .72s var(--motion-ease),transform .72s var(--motion-ease);
+}
+body.motion-ready main>section.motion-visible{opacity:1;transform:none}
+.site-progress{
+  position:fixed;z-index:90;left:0;top:0;width:100%;height:3px;pointer-events:none;
+  background:transparent;
+}
+.site-progress span{
+  display:block;width:0;height:100%;
+  background:linear-gradient(90deg,var(--terracotta),var(--gold),#233b82);
+  box-shadow:0 0 14px rgba(234,200,120,.35);
+  transform-origin:left center;
+}
+.nav{transition:padding .35s var(--motion-ease),background .35s ease,box-shadow .35s ease}
+.nav.nav-scrolled{padding-top:8px;padding-bottom:8px;background:rgba(247,241,230,.94);box-shadow:0 10px 35px rgba(18,60,50,.08)}
+.brand-logo-box{transition:transform .4s var(--motion-ease),box-shadow .4s ease}
+.nav.nav-scrolled .brand-logo-box{transform:scale(.94)}
+.nav nav a{position:relative;transition:color .25s ease,transform .25s ease}
+.nav nav a:not(.outline):after{
+  content:"";position:absolute;left:7px;right:7px;bottom:2px;height:2px;border-radius:2px;
+  background:var(--terracotta);transform:scaleX(0);transform-origin:center;
+  transition:transform .25s var(--motion-ease);
+}
+.nav nav a:not(.outline):hover:after{transform:scaleX(1)}
+.gssks-hero,.hero{
+  --hero-shift:0px;
+  background-position:center calc(50% + var(--hero-shift));
+}
+.hero:after,.gssks-hero:after{
+  content:"";position:absolute;z-index:1;pointer-events:none;
+  width:clamp(180px,32vw,520px);height:clamp(180px,32vw,520px);
+  right:-10%;top:12%;border:1px solid rgba(234,200,120,.12);border-radius:50%;
+  box-shadow:0 0 0 35px rgba(234,200,120,.025),0 0 0 70px rgba(201,101,69,.018);
+  animation:ambientOrbit 22s linear infinite;
+}
+.gssks-hero .hero-content,.hero .hero-content{animation:heroEnter .9s var(--motion-ease) both}
+.hero-kicker{animation:kickerIn .8s .1s var(--motion-ease) both}
+.gssks-hero p,.hero p{animation:copyIn .8s .24s var(--motion-ease) both}
+.gssks-hero .hero-actions,.hero .hero-actions{animation:copyIn .8s .34s var(--motion-ease) both}
+.hero-actions .btn{position:relative;overflow:hidden}
+.hero-actions .btn:after{
+  content:"";position:absolute;inset:0;transform:translateX(-110%);
+  background:linear-gradient(105deg,transparent 25%,rgba(255,255,255,.2) 50%,transparent 75%);
+  transition:transform .7s ease;
+}
+.hero-actions .btn:hover:after{transform:translateX(110%)}
+.card,.feature-card,.project-card,.gallery-card,.impact-card,.premium-card,.work-card,.organization-card,.featured-project,.contact-banner,.story-card{
+  transform:translateZ(0);
+  transition:transform .42s var(--motion-ease),box-shadow .42s ease,border-color .42s ease;
+}
+.card:hover,.feature-card:hover,.project-card:hover,.gallery-card:hover,.premium-card:hover,.work-card:hover{
+  transform:translate3d(0,-7px,0);
+}
+.gallery-card{position:relative}
+.gallery-card:before{
+  content:"";position:absolute;z-index:2;inset:0;pointer-events:none;
+  background:linear-gradient(120deg,transparent 35%,rgba(255,255,255,.18) 50%,transparent 65%);
+  transform:translateX(-130%);transition:transform .8s ease;
+}
+.gallery-card:hover:before{transform:translateX(130%)}
+.gallery-card img{transition:transform .65s var(--motion-ease),filter .65s ease}
+.gallery-card:hover img{transform:scale(1.035);filter:saturate(1.04)}
+.section-soft,.dark-section,.section-dark{position:relative;isolation:isolate}
+.section-soft:before{
+  content:"";position:absolute;z-index:-1;right:-140px;top:12%;width:300px;height:300px;
+  border:1px solid rgba(35,59,130,.08);border-radius:50%;
+  animation:softOrbit 26s linear infinite;
+}
+.dark-section:before,.section-dark:before{
+  content:"";position:absolute;z-index:-1;left:-160px;bottom:-130px;width:360px;height:360px;
+  border:1px solid rgba(234,200,120,.1);border-radius:50%;
+  box-shadow:0 0 0 45px rgba(234,200,120,.02);
+  animation:softOrbitReverse 30s linear infinite;
+}
+.section-head .eyebrow:before{transition:width .4s var(--motion-ease)}
+.section-head:hover .eyebrow:before{width:46px}
+.number,.icon,.pill{transition:transform .35s var(--motion-ease),box-shadow .35s ease}
+.card:hover .number,.feature-card:hover .icon{transform:rotate(-5deg) scale(1.06);box-shadow:0 8px 20px rgba(18,60,50,.12)}
+.impact-card{position:relative;overflow:hidden}
+.impact-card:after{
+  content:"";position:absolute;width:120px;height:120px;right:-45px;bottom:-55px;
+  border:1px solid rgba(255,255,255,.18);border-radius:50%;
+  transition:transform .6s var(--motion-ease);
+}
+.impact-card:hover:after{transform:scale(1.45)}
+.featured-project,.organization-card,.contact-banner{position:relative;overflow:hidden}
+.featured-project:after,.organization-card:after,.contact-banner:after{
+  content:"";position:absolute;right:-100px;top:-120px;width:280px;height:280px;
+  border:1px solid rgba(234,200,120,.14);border-radius:50%;pointer-events:none;
+  animation:slowPulse 7s ease-in-out infinite;
+}
+.contact-banner .btn,.featured-project .btn{position:relative;z-index:2}
+.footer{position:relative;overflow:hidden}
+.footer:before{
+  content:"";position:absolute;left:-120px;top:-160px;width:360px;height:360px;
+  border:1px solid rgba(234,200,120,.08);border-radius:50%;
+  animation:ambientOrbit 28s linear infinite;
+}
+.site-progress+ .brand-loader{z-index:120}
+@keyframes heroEnter{from{opacity:0;transform:translate3d(0,18px,0)}to{opacity:1;transform:none}}
+@keyframes kickerIn{from{opacity:0;transform:translate3d(-14px,0,0)}to{opacity:1;transform:none}}
+@keyframes copyIn{from{opacity:0;transform:translate3d(0,12px,0)}to{opacity:1;transform:none}}
+@keyframes ambientOrbit{to{transform:rotate(360deg)}}
+@keyframes softOrbit{to{transform:rotate(-360deg)}}
+@keyframes softOrbitReverse{to{transform:rotate(360deg)}}
+@keyframes slowPulse{0%,100%{opacity:.55;transform:scale(.96)}50%{opacity:1;transform:scale(1.03)}}
+@media(max-width:760px){
+  .site-progress{height:2px}
+  body.motion-ready main>section{transform:translate3d(0,18px,0);transition-duration:.55s}
+  .nav.nav-scrolled{padding-top:7px;padding-bottom:7px}
+  .hero:after,.gssks-hero:after{width:230px;height:230px;right:-125px;top:28%;animation-duration:28s}
+  .section-soft:before,.dark-section:before,.section-dark:before{opacity:.65}
+  .gallery-card:hover img{transform:none;filter:none}
+  .gallery-card:before{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  body.motion-ready main>section{opacity:1;transform:none;transition:none}
+  .hero:after,.gssks-hero:after,.section-soft:before,.dark-section:before,.section-dark:before,.featured-project:after,.organization-card:after,.contact-banner:after,.footer:before{animation:none}
+  .gssks-hero .hero-content,.hero .hero-content,.hero-kicker,.gssks-hero p,.hero p,.gssks-hero .hero-actions,.hero .hero-actions{animation:none}
+  .gallery-card:hover img{transform:none}
+}
