@@ -27,7 +27,7 @@ def admin_required(f):
  return w
 @admin_bp.get("/")
 @admin_required
-def dashboard(): return render_template("admin/dashboard.html",counts={"users":User.query.count(),"projects":Project.query.count(),"events":Event.query.count(),"enquiries":ContactMessage.query.count(),"volunteers":VolunteerApplication.query.count(),"donations":Donation.query.count()})
+def dashboard(): return render_template("admin/dashboard.html",counts={"users":User.query.count(),"projects":Project.query.count(),"events":Event.query.count(),"gallery":GalleryItem.query.count(),"enquiries":ContactMessage.query.count(),"volunteers":VolunteerApplication.query.count(),"donations":Donation.query.count()})
 @admin_bp.get("/projects")
 @admin_required
 def projects(): return render_template("admin/projects.html",projects=Project.query.order_by(Project.created_at.desc()).all())
