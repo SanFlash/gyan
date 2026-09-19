@@ -48,6 +48,6 @@ def contact():
             db.session.add(ContactMessage(name=name,email=email,phone=request.form.get("phone",""),subject=request.form.get("subject",""),message=message));db.session.commit();flash("Your message has been received.","success");return redirect(url_for("public.contact"))
     return render_template("public/contact.html")
 @public_bp.get("/api/health")
-def health(): return jsonify(ok=True,service="gyanpath",database="connected")
+def health(): return jsonify(ok=True,service="gyanpath")
 @public_bp.get("/api/projects")
 def api_projects(): return jsonify(items=[{"title":p.title,"slug":p.slug,"category":p.category,"status":p.status} for p in Project.query.filter_by(published=True).all()])
