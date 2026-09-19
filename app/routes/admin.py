@@ -13,7 +13,7 @@ def _media_url(field_name, folder):
    import cloudinary.uploader
    cloudinary.config(cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME",""),api_key=os.getenv("CLOUDINARY_API_KEY",""),api_secret=os.getenv("CLOUDINARY_API_SECRET",""),secure=True)
    if os.getenv("CLOUDINARY_CLOUD_NAME") and os.getenv("CLOUDINARY_API_KEY") and os.getenv("CLOUDINARY_API_SECRET"):
-    return cloudinary.uploader.upload(f,folder=folder)["secure_url"]
+    return cloudinary.uploader.upload(f,folder=folder,resource_type="auto")["secure_url"]
   except Exception:
    flash("Media upload failed. You can use an approved hosted image URL instead.","error")
  return request.form.get(field_name+"_url","").strip()
