@@ -1,26 +1,30 @@
-# Gyanpath NGO — Fixed Production Build
+# Gyanpath NGO — Fixed Responsive Build
 
-Flask-based NGO website with public pages, authentication, customer/staff/admin foundations, project and enquiry management, responsive premium UI, and optional 3D hero experience.
-
-## Development
+## Local
+The app automatically uses SQLite at `instance/gyanpath.db` when `DATABASE_URL` is not set. The database is created on startup and a local demo admin is created automatically.
 
 ```bash
 python -m venv .venv
 # Windows
 .venv\\Scripts\\activate
-# macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
-python seed.py
-python verify_app.py
 python run.py
 ```
 
-## Demo accounts (development only)
-- Admin: admin.demo@gyanpath.local / Gyanpath@Demo2026!
-- Staff: staff.demo@gyanpath.local / Gyanpath@Demo2026!
-- User: user.demo@gyanpath.local / Gyanpath@Demo2026!
+Open `http://127.0.0.1:5000`.
 
-Do not use demo credentials in production.
+### Local admin
+- Email: `admin.demo@gyanpath.local`
+- Password: `Gyanpath@Demo2026!`
+
+## Production
+Set `DATABASE_URL` to managed PostgreSQL and `SECRET_KEY` to a strong secret. Render binds Gunicorn to `0.0.0.0:$PORT`, making the deployed site publicly reachable. Production disables demo-user seeding.
+
+## Admin
+`/admin/` supports project creation, editing, publishing/unpublishing and deletion, plus user and enquiry views. A published project appears on the public website.
+
+## Responsive fixes
+The latest build removes oversized padding, prevents horizontal overflow, adds a mobile menu, tightens grids/sections, and hides the 3D canvas for reduced-motion users.
 
 ## Content
-Official organizational facts should be entered and verified by the organization; placeholder/demo content is clearly marked for replacement.
+Official organizational facts should be entered and verified by the organization. Placeholder wording is used where information is not available.
