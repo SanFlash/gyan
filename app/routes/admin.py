@@ -86,12 +86,72 @@ def donations(): return render_template("admin/donations.html",items=Donation.qu
 @admin_bp.get("/artisans")
 @admin_required
 def artisans(): return render_template("admin/artisans.html",items=Artisan.query.order_by(Artisan.created_at.desc()).all())
+@admin_bp.route("/artisans/new",methods=["GET","POST"])
+@admin_required
+def artisan_new():
+ if request.method=="POST":
+  a=Artisan(name=request.form.get("name","").strip(),slug=request.form.get("slug","").strip().lower(),location=request.form.get("location",""),craft=request.form.get("craft",""),biography=request.form.get("biography",""),image_url=request.form.get("image_url",""),published=bool(request.form.get("published")));db.session.add(a);db.session.commit();flash("Artisan created.","success");return redirect(url_for("admin.artisans"))
+ return render_template("admin/artisan_form.html",item=None)
+@admin_bp.route("/artisans/<int:id>/edit",methods=["GET","POST"])
+@admin_required
+def artisan_edit(id):
+ a=db.session.get(Artisan,id)
+ if not a:return "Artisan not found",404
+ if request.method=="POST":
+  a.name=request.form.get("name","").strip();a.slug=request.form.get("slug","").strip().lower();a.location=request.form.get("location","");a.craft=request.form.get("craft","");a.biography=request.form.get("biography","");a.image_url=request.form.get("image_url","");a.published=bool(request.form.get("published"));db.session.commit();flash("Artisan updated.","success");return redirect(url_for("admin.artisans"))
+ return render_template("admin/artisan_form.html",item=a)
+@admin_bp.post("/artisans/<int:id>/delete")
+@admin_required
+def artisan_delete(id):
+ a=db.session.get(Artisan,id)
+ if a:db.session.delete(a);db.session.commit();flash("Artisan deleted.","success")
+ return redirect(url_for("admin.artisans"))
 @admin_bp.get("/blog")
 @admin_required
 def blog(): return render_template("admin/blog.html",items=BlogPost.query.order_by(BlogPost.created_at.desc()).all())
+@admin_bp.route("/blog/new",methods=["GET","POST"])
+@admin_required
+def blog_new():
+ if request.method=="POST":
+  p=BlogPost(title=request.form.get("title","").strip(),slug=request.form.get("slug","").strip().lower(),excerpt=request.form.get("excerpt",""),content=request.form.get("content",""),published=bool(request.form.get("published")));db.session.add(p);db.session.commit();flash("News post created.","success");return redirect(url_for("admin.blog"))
+ return render_template("admin/blog_form.html",item=None)
+@admin_bp.route("/blog/<int:id>/edit",methods=["GET","POST"])
+@admin_required
+def blog_edit(id):
+ p=db.session.get(BlogPost,id)
+ if not p:return "Post not found",404
+ if request.method=="POST":
+  p.title=request.form.get("title","").strip();p.slug=request.form.get("slug","").strip().lower();p.excerpt=request.form.get("excerpt","");p.content=request.form.get("content","");p.published=bool(request.form.get("published"));db.session.commit();flash("News post updated.","success");return redirect(url_for("admin.blog"))
+ return render_template("admin/blog_form.html",item=p)
+@admin_bp.post("/blog/<int:id>/delete")
+@admin_required
+def blog_delete(id):
+ p=db.session.get(BlogPost,id)
+ if p:db.session.delete(p);db.session.commit();flash("News post deleted.","success")
+ return redirect(url_for("admin.blog"))
 @admin_bp.get("/impact")
 @admin_required
 def impact(): return render_template("admin/impact.html",items=ImpactStatistic.query.order_by(ImpactStatistic.sort_order).all())
+@admin_bp.route("/impact/new",methods=["GET","POST"])
+@admin_required
+def impact_new():
+ if request.method=="POST":
+  x=ImpactStatistic(label=request.form.get("label","").strip(),value=request.form.get("value","0").strip(),sort_order=int(request.form.get("sort_order","0") or 0),published=bool(request.form.get("published")));db.session.add(x);db.session.commit();flash("Impact statistic created.","success");return redirect(url_for("admin.impact"))
+ return render_template("admin/impact_form.html",item=None)
+@admin_bp.route("/impact/<int:id>/edit",methods=["GET","POST"])
+@admin_required
+def impact_edit(id):
+ x=db.session.get(ImpactStatistic,id)
+ if not x:return "Statistic not found",404
+ if request.method=="POST":
+  x.label=request.form.get("label","").strip();x.value=request.form.get("value","0").strip();x.sort_order=int(request.form.get("sort_order","0") or 0);x.published=bool(request.form.get("published"));db.session.commit();flash("Impact statistic updated.","success");return redirect(url_for("admin.impact"))
+ return render_template("admin/impact_form.html",item=x)
+@admin_bp.post("/impact/<int:id>/delete")
+@admin_required
+def impact_delete(id):
+ x=db.session.get(ImpactStatistic,id)
+ if x:db.session.delete(x);db.session.commit();flash("Impact statistic deleted.","success")
+ return redirect(url_for("admin.impact"))
 @admin_bp.get("/documents")
 @admin_required
 def documents(): return render_template("admin/documents.html",items=Document.query.order_by(Document.id.desc()).all())
@@ -104,3 +164,12 @@ def settings():
    s=SiteSetting.query.filter_by(key=key).first() or SiteSetting(key=key);s.value=value;db.session.add(s)
   db.session.commit();flash("Site settings saved.","success")
  vals={s.key:s.value for s in SiteSetting.query.all()};return render_template("admin/settings.html",settings=vals)
+
+@admin_bp.post("/status/<model>/<int:id>")
+@admin_required
+def status_update(model,id):
+ cls={"volunteer":VolunteerApplication,"donation":Donation,"message":ContactMessage}.get(model)
+ obj=db.session.get(cls,id) if cls else None
+ if obj:
+  obj.status=request.form.get("status",obj.status);db.session.commit();flash("Status updated.","success")
+ return redirect(request.referrer or url_for("admin.dashboard"))
