@@ -23,6 +23,8 @@ def settings():
 
 @public_bp.get("/")
 def home():
+    gallery = (GalleryItem.query.filter_by(published=True).order_by(GalleryItem.sort_order, GalleryItem.id.desc()).limit(6).all())
+
     stats = (
         ImpactStatistic.query.filter_by(published=True)
         .order_by(ImpactStatistic.sort_order)
@@ -67,6 +69,7 @@ def home():
         projects=projects,
         events=events,
         stats=stats,
+        gallery=gallery,
     )
 
 
