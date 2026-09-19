@@ -6,7 +6,7 @@ public_bp=Blueprint("public",__name__)
 @public_bp.app_context_processor
 def settings(): return {"site_settings":{x.key:x.value for x in SiteSetting.query.all()}}
 @public_bp.get("/")
-def home(): return render_template("public/home.html",projects=Project.query.filter_by(published=True).order_by(Project.created_at.desc()).limit(6).all(),events=Event.query.order_by(Event.event_date.asc().nullslast()).limit(3).all(),stats=ImpactStatistic.query.filter_by(published=True).order_by(ImpactStatistic.sort_order).limit(4).all())
+def home():\n    stats=ImpactStatistic.query.filter_by(published=True).order_by(ImpactStatistic.sort_order).limit(4).all()\n    if not stats:\n        stats=[{"value":"410","label":"Artisans listed in an MSME SFURTI cluster record"},{"value":"Rs. 233.92L","label":"GOI grant / NA share in that record"},{"value":"Rs. 20.16L","label":"IA / SPV share in that record"},{"value":"2023–24","label":"Government handicrafts marketing calendar reference"}]\n    return render_template("public/home.html",projects=Project.query.filter_by(published=True).order_by(Project.created_at.desc()).limit(6).all(),events=Event.query.order_by(Event.event_date.asc().nullslast()).limit(3).all(),stats=stats)
 @public_bp.get("/about")
 def about(): return render_template("public/about.html")
 @public_bp.get("/mission")
