@@ -105,3 +105,21 @@ main{min-width:0}
 @media(prefers-reduced-motion:reduce){
   .footer-links a{transition:none}
 }
+/* Admin/auth surfaces */
+.admin-page,.admin-content{min-width:0}
+.admin-page{padding-top:clamp(44px,5vw,72px)}
+.admin-head{margin-bottom:24px}
+.admin-head h1{line-height:1.05}
+.admin-grid{align-items:stretch}
+.admin-tile{min-width:0;padding:22px}
+.admin-table{width:100%;overflow:hidden}
+.admin-row{min-width:0}
+.auth-shell{padding:clamp(60px,8vw,110px) var(--ui-gutter)}
+.auth-card{padding:clamp(24px,4vw,38px)}
+.auth-card h1{font-size:clamp(2.2rem,5vw,3.2rem);text-wrap:balance}
+@media(max-width:760px){
+  .admin-content{padding:28px var(--ui-gutter)}
+  .admin-grid{grid-template-columns:1fr}
+  .admin-row{flex-direction:column;align-items:flex-start}
+  .row-actions{width:100%}
+}
