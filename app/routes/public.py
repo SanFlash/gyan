@@ -83,8 +83,8 @@ def mission():
     return render_template(
         "public/standard.html",
         eyebrow="Mission",
-        title="Turning opportunity into meaningful community progress.",
-        body="The organization can publish its verified mission statement here from the administration workflow.",
+        title="Mission statement",
+        body="The official mission statement will be published after GSSKS provides and approves it.",
     )
 
 
@@ -93,8 +93,8 @@ def vision():
     return render_template(
         "public/standard.html",
         eyebrow="Vision",
-        title="A future shaped by learning, skills and opportunity.",
-        body="The organization can publish its verified vision statement here from the administration workflow.",
+        title="Vision statement",
+        body="The official vision statement will be published after GSSKS provides and approves it.",
     )
 
 
@@ -108,8 +108,8 @@ def education():
     return render_template(
         "public/standard.html",
         eyebrow="Education",
-        title="Learning that creates possibility.",
-        body="Education initiatives and verified programme information will be updated by the organization.",
+        title="Education",
+        body="Verified education programme information will be published after GSSKS provides and approves it.",
     )
 
 
@@ -118,8 +118,8 @@ def women():
     return render_template(
         "public/standard.html",
         eyebrow="Women Empowerment",
-        title="Participation, capability and opportunity.",
-        body="Programme details will be updated by the organization.",
+        title="Women Empowerment",
+        body="Verified programme information will be published after GSSKS provides and approves it.",
     )
 
 
@@ -128,7 +128,7 @@ def skills():
     return render_template(
         "public/standard.html",
         eyebrow="Skill Development",
-        title="Practical skills for meaningful opportunity.",
+        title="Skill Development",
         body="Training details will be updated by the organization.",
     )
 
@@ -138,8 +138,8 @@ def livelihood():
     return render_template(
         "public/standard.html",
         eyebrow="Livelihood Development",
-        title="Building pathways to employment and self-employment.",
-        body="Livelihood programme details will be updated by the organization.",
+        title="Livelihood Development",
+        body="Verified livelihood programme information will be published after GSSKS provides and approves it.",
     )
 
 
@@ -148,8 +148,8 @@ def handicrafts():
     return render_template(
         "public/standard.html",
         eyebrow="Handicrafts & Handlooms",
-        title="Preserving craft while creating opportunity.",
-        body="Craft, handloom, jute and textile programme information will be updated by the organization.",
+        title="Handicrafts & Handlooms",
+        body="Verified craft and artisan programme information will be published after GSSKS provides and approves it.",
     )
 
 
