@@ -1,19 +1,71 @@
-.brand-loader{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle at 50% 42%,rgba(35,59,130,.24),transparent 28%),linear-gradient(145deg,#071b19 0%,#0b2923 55%,#132f4d 100%);color:#fff;perspective:1200px}
-.brand-loader::before,.brand-loader::after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(234,200,120,.22);pointer-events:none}.brand-loader::before{width:min(82vw,760px);aspect-ratio:1;animation:loaderOrbit 18s linear infinite}.brand-loader::after{width:min(62vw,560px);aspect-ratio:1;border-color:rgba(164,71,85,.28);animation:loaderOrbitReverse 13s linear infinite}
-.loader-stars{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(234,200,120,.72) 1px,transparent 1.5px);background-size:90px 90px;opacity:.2;animation:loaderStars 12s linear infinite}
-.loader-scene{position:relative;z-index:3;width:min(92vw,560px);display:grid;place-items:center;text-align:center;transform-style:preserve-3d;padding:28px}
-.loader-logo-wrap{position:relative;width:clamp(150px,30vw,230px);aspect-ratio:1;display:grid;place-items:center;transform-style:preserve-3d;animation:loaderFloat 4.8s ease-in-out infinite}
-.loader-logo-wrap::before,.loader-logo-wrap::after{content:"";position:absolute;inset:-20px;border-radius:50%;border:1px solid rgba(234,200,120,.42);transform:rotateX(68deg) rotateZ(0deg);box-shadow:0 0 40px rgba(234,200,120,.08);animation:loaderRing 7s linear infinite}
-.loader-logo-wrap::after{inset:-38px;border-color:rgba(201,101,69,.3);transform:rotateY(68deg);animation-duration:10s;animation-direction:reverse}
-.loader-logo{width:74%;height:74%;object-fit:contain;filter:drop-shadow(0 22px 34px rgba(0,0,0,.32));animation:loaderSpin 9s linear infinite}
-.loader-kicker{margin-top:28px;color:#eac878;font-size:clamp(.65rem,1.6vw,.78rem);font-weight:900;letter-spacing:.24em;text-transform:uppercase}
-.loader-title{margin:10px 0 0;font:700 clamp(1.65rem,5vw,3rem)/1.04 "Playfair Display",Georgia,serif;letter-spacing:-.03em}
-.loader-title span{display:block;color:#d99a70}
-.loader-subtitle{margin:14px auto 0;max-width:470px;color:rgba(255,255,255,.68);font-size:clamp(.8rem,2vw,.98rem)}
-.loader-progress{width:min(340px,72vw);height:2px;margin:28px auto 0;overflow:hidden;background:rgba(255,255,255,.12);border-radius:99px}
-.loader-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#a44755,#eac878,#233b82);animation:loaderProgress 3s linear forwards}
-.loader-note{margin-top:12px;color:rgba(255,255,255,.4);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase}
-@keyframes loaderSpin{to{transform:rotateY(360deg) rotateZ(8deg)}}@keyframes loaderFloat{0%,100%{transform:translateY(0) rotateX(0deg)}50%{transform:translateY(-13px) rotateX(4deg)}}@keyframes loaderRing{to{transform:rotateX(68deg) rotateZ(360deg)}}@keyframes loaderOrbit{to{transform:rotate(360deg)}}@keyframes loaderOrbitReverse{to{transform:rotate(-360deg)}}@keyframes loaderStars{to{background-position:90px 90px}}@keyframes loaderProgress{to{width:100%}}
+/* Professional 3-second Gyanpath brand loader: restrained, centered and responsive. */
+.brand-loader{
+  position:fixed;inset:0;z-index:10000;display:grid;place-items:center;overflow:hidden;
+  background:#071b19;color:#fff;opacity:1;visibility:visible;
+  transition:opacity .55s ease,visibility .55s ease;
+}
+.brand-loader.is-complete{opacity:0;visibility:hidden}
+.brand-loader::before{
+  content:"";position:absolute;width:min(68vw,560px);aspect-ratio:1;border-radius:50%;
+  border:1px solid rgba(234,200,120,.15);
+  box-shadow:0 0 90px rgba(234,200,120,.05),inset 0 0 70px rgba(35,59,130,.05);
+  animation:loaderHalo 9s linear infinite;
+}
+.brand-loader::after{
+  content:"";position:absolute;width:min(46vw,360px);aspect-ratio:1;border-radius:50%;
+  border:1px solid rgba(201,101,69,.2);transform:rotateX(68deg) rotateZ(0deg);
+  animation:loaderOrbit 5.5s linear infinite;
+}
+.loader-scene{
+  position:relative;z-index:2;width:min(90vw,520px);display:grid;place-items:center;
+  text-align:center;padding:24px;
+}
+.loader-logo-wrap{
+  position:relative;width:clamp(118px,18vw,158px);aspect-ratio:1;display:grid;place-items:center;
+  transform-style:preserve-3d;filter:drop-shadow(0 18px 30px rgba(0,0,0,.3));
+  animation:loaderFloat 2.8s ease-in-out infinite;
+}
+.loader-logo{
+  width:76%;height:76%;object-fit:contain;animation:loaderLogoTurn 3s cubic-bezier(.2,.7,.2,1) infinite;
+}
+.loader-logo-wrap::before{
+  content:"";position:absolute;inset:8%;border-radius:50%;
+  border:1px solid rgba(234,200,120,.28);transform:rotateX(68deg);
+}
+.loader-kicker{
+  margin-top:20px;color:#eac878;font-size:.68rem;font-weight:900;letter-spacing:.22em;text-transform:uppercase;
+}
+.loader-title{
+  margin:8px 0 0;font:700 clamp(1.45rem,4vw,2.25rem)/1.08 "Playfair Display",Georgia,serif;
+  letter-spacing:-.025em;
+}
+.loader-title span{color:#d99a70}
+.loader-subtitle{
+  margin:10px auto 0;color:rgba(255,255,255,.58);font-size:.78rem;letter-spacing:.03em;
+}
+.loader-progress{
+  width:min(280px,62vw);height:2px;margin:24px auto 0;overflow:hidden;border-radius:99px;background:rgba(255,255,255,.1);
+}
+.loader-progress span{
+  display:block;width:0;height:100%;background:linear-gradient(90deg,#a44755,#eac878,#233b82);
+  animation:loaderProgress 3s linear forwards;
+}
+.loader-note{
+  margin-top:9px;color:rgba(255,255,255,.32);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
+}
 body.loader-active{overflow:hidden}
-@media(max-width:560px){.loader-logo-wrap{width:155px}.loader-logo-wrap::before{inset:-12px}.loader-logo-wrap::after{inset:-24px}.loader-title{font-size:1.7rem}.loader-subtitle{font-size:.82rem}.loader-scene{padding:18px}}
-@media(prefers-reduced-motion:reduce){.brand-loader::before,.brand-loader::after,.loader-stars,.loader-logo-wrap,.loader-logo,.loader-logo-wrap::before,.loader-logo-wrap::after{animation:none}.loader-progress span{animation:none;width:100%}}
+@keyframes loaderFloat{0%,100%{transform:translateY(0) rotateX(0)}50%{transform:translateY(-7px) rotateX(3deg)}}
+@keyframes loaderLogoTurn{0%{transform:rotateY(-10deg) scale(.96)}45%{transform:rotateY(8deg) scale(1)}100%{transform:rotateY(10deg) scale(.98)}}
+@keyframes loaderOrbit{to{transform:rotateX(68deg) rotateZ(360deg)}}
+@keyframes loaderHalo{to{transform:rotate(360deg)}}
+@keyframes loaderProgress{to{width:100%}}
+@media(max-width:560px){
+  .loader-scene{padding:18px}
+  .loader-logo-wrap{width:122px}
+  .loader-kicker{margin-top:17px;font-size:.61rem}
+  .loader-subtitle{font-size:.72rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .brand-loader::before,.brand-loader::after,.loader-logo-wrap,.loader-logo{animation:none}
+  .loader-progress span{animation:none;width:100%}
+}
