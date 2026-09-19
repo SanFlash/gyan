@@ -3,7 +3,7 @@ from flask import Blueprint,render_template,request,redirect,url_for,flash
 import os
 from flask_login import login_required,current_user
 from ..extensions import db
-from ..models import User,Project,Event,ContactMessage,VolunteerApplication,Donation,Artisan,BlogPost,ImpactStatistic,Document,GalleryItem,SiteSetting
+from ..models import User,Project,ProjectBrief,Event,ContactMessage,VolunteerApplication,Donation,Artisan,BlogPost,ImpactStatistic,Document,GalleryItem,SiteSetting
 admin_bp=Blueprint("admin",__name__,url_prefix="/admin")
 def _media_url(field_name, folder):
  f=request.files.get(field_name)
@@ -32,7 +32,7 @@ def dashboard(): return render_template("admin/dashboard.html",counts={"users":U
 @admin_required
 def projects(): return render_template("admin/projects.html",projects=Project.query.order_by(Project.created_at.desc()).all())
 def save_project(p):
- p.title=request.form.get("title","").strip();p.slug=request.form.get("slug","").strip().lower();p.category=request.form.get("category","").strip();p.location=request.form.get("location","").strip();p.status=request.form.get("status","Upcoming");p.short_description=request.form.get("short_description","").strip();p.description=request.form.get("description","").strip();p.published=bool(request.form.get("published"));p.featured=bool(request.form.get("featured"))
+ p.title=request.form.get("title","").strip();p.slug=request.form.get("slug","").strip().lower();p.category=request.form.get("category","").strip();p.location=request.form.get("location","").strip();p.status=request.form.get("status","Upcoming");p.short_description=request.form.get("short_description","").strip();p.description=request.form.get("description","").strip();p.published=bool(request.form.get("published"));p.featured=bool(request.form.get("featured"));b=getattr(p,"brief",None) or ProjectBrief(project=p);b.duration=request.form.get("duration","").strip();b.objective=request.form.get("objective","").strip();b.beneficiaries=request.form.get("beneficiaries","").strip();b.activities=request.form.get("activities","").strip();b.outcomes=request.form.get("outcomes","").strip();b.photos_url=request.form.get("photos_url","").strip();b.partners=request.form.get("partners","").strip();db.session.add(b)
 @admin_bp.route("/projects/new",methods=["GET","POST"])
 @admin_required
 def project_new():
