@@ -4,8 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#123c32">
-<meta name="description" content="Gyanpath Shiksha Evam Samaj Kalyan Samiti — education, social welfare, skills, livelihoods and craft initiatives in Bhopal, Madhya Pradesh.">
-<title>{% block title %}Gyanpath — Empowering Communities{% endblock %}</title>
+<meta name="description" content="{% block meta_description %}Gyan Path Shiksha Evam Samaj Kalyan Samiti (GSSKS), established in 1992 and recognised by the Government of Madhya Pradesh, Bhopal.{% endblock %}">
+<title>{% block title %}Gyan Path Shiksha Evam Samaj Kalyan Samiti | GSSKS{% endblock %}</title>
+<link rel="canonical" href="{{ request.base_url }}">
+<script type="application/ld+json">{{ {"@context":"https://schema.org","@type":"NGO","name":"Gyan Path Shiksha Evam Samaj Kalyan Samiti","alternateName":"GSSKS","foundingDate":"1992","url":request.url_root,"email":"gyanpathngo.176@gmail.com","telephone":"0755-4278487","address":{"@type":"PostalAddress","streetAddress":"Sunder Nagar, Chhola Road, Behind Dussehra Maidan, Block Fanda","addressLocality":"Bhopal","addressRegion":"Madhya Pradesh","postalCode":"462001","addressCountry":"IN"} }|tojson }}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
