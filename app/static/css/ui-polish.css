@@ -263,3 +263,10 @@ body.motion-ready main>section.motion-visible{opacity:1;transform:none}
   .gssks-hero .hero-content,.hero .hero-content,.hero-kicker,.gssks-hero p,.hero p,.gssks-hero .hero-actions,.hero .hero-actions{animation:none}
   .gallery-card:hover img{transform:none}
 }
+
+.nav nav a.nav-active{color:var(--forest)}
+.nav nav a.nav-active:after{transform:scaleX(1)}
+@media(max-width:1120px){
+  .nav nav a.nav-active{background:rgba(255,255,255,.08);border-radius:12px}
+  .nav nav a.nav-active:after{display:none}
+}
