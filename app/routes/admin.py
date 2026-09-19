@@ -1,9 +1,23 @@
 from functools import wraps
 from flask import Blueprint,render_template,request,redirect,url_for,flash
+import os
 from flask_login import login_required,current_user
 from ..extensions import db
-from ..models import User,Project,Event,ContactMessage,VolunteerApplication,Donation,Artisan,BlogPost,ImpactStatistic,Document,SiteSetting
+from ..models import User,Project,Event,ContactMessage,VolunteerApplication,Donation,Artisan,BlogPost,ImpactStatistic,Document,GalleryItem,SiteSetting
 admin_bp=Blueprint("admin",__name__,url_prefix="/admin")
+def _media_url(field_name, folder):
+ f=request.files.get(field_name)
+ if f and f.filename:
+  try:
+   import cloudinary
+   import cloudinary.uploader
+   cloudinary.config(cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME",""),api_key=os.getenv("CLOUDINARY_API_KEY",""),api_secret=os.getenv("CLOUDINARY_API_SECRET",""),secure=True)
+   if os.getenv("CLOUDINARY_CLOUD_NAME") and os.getenv("CLOUDINARY_API_KEY") and os.getenv("CLOUDINARY_API_SECRET"):
+    return cloudinary.uploader.upload(f,folder=folder)["secure_url"]
+  except Exception:
+   flash("Media upload failed. You can use an approved hosted image URL instead.","error")
+ return request.form.get(field_name+"_url","").strip()
+
 def admin_required(f):
  @wraps(f)
  @login_required
@@ -152,9 +166,71 @@ def impact_delete(id):
  x=db.session.get(ImpactStatistic,id)
  if x:db.session.delete(x);db.session.commit();flash("Impact statistic deleted.","success")
  return redirect(url_for("admin.impact"))
+@admin_bp.get("/gallery")
+@admin_required
+def gallery(): return render_template("admin/gallery.html",items=GalleryItem.query.order_by(GalleryItem.sort_order,GalleryItem.id.desc()).all())
+
+@admin_bp.route("/gallery/new",methods=["GET","POST"])
+@admin_required
+def gallery_new():
+ if request.method=="POST":
+  x=GalleryItem(title=request.form.get("title","").strip(),category=request.form.get("category","Other").strip(),image_url=_media_url("image","gyanpath/gallery"),location=request.form.get("location","").strip(),description=request.form.get("description","").strip(),published=bool(request.form.get("published")),sort_order=int(request.form.get("sort_order","0") or 0))
+  d=request.form.get("event_date") or None
+  if d:
+   from datetime import datetime
+   x.event_date=datetime.strptime(d,"%Y-%m-%d").date()
+  if not x.title or not x.image_url: flash("Title and an approved image URL/upload are required.","error")
+  else: db.session.add(x);db.session.commit();flash("Gallery item saved.","success");return redirect(url_for("admin.gallery"))
+ return render_template("admin/gallery_form.html",item=None)
+
+@admin_bp.route("/gallery/<int:id>/edit",methods=["GET","POST"])
+@admin_required
+def gallery_edit(id):
+ x=db.session.get(GalleryItem,id)
+ if not x:return "Gallery item not found",404
+ if request.method=="POST":
+  x.title=request.form.get("title","").strip();x.category=request.form.get("category","Other").strip();new_url=_media_url("image","gyanpath/gallery");x.image_url=new_url or x.image_url;x.location=request.form.get("location","").strip();x.description=request.form.get("description","").strip();x.published=bool(request.form.get("published"));x.sort_order=int(request.form.get("sort_order","0") or 0)
+  d=request.form.get("event_date") or None
+  from datetime import datetime
+  x.event_date=datetime.strptime(d,"%Y-%m-%d").date() if d else None
+  db.session.commit();flash("Gallery item updated.","success");return redirect(url_for("admin.gallery"))
+ return render_template("admin/gallery_form.html",item=x)
+
+@admin_bp.post("/gallery/<int:id>/delete")
+@admin_required
+def gallery_delete(id):
+ x=db.session.get(GalleryItem,id)
+ if x: db.session.delete(x);db.session.commit();flash("Gallery item deleted.","success")
+ return redirect(url_for("admin.gallery"))
+
 @admin_bp.get("/documents")
 @admin_required
-def documents(): return render_template("admin/documents.html",items=Document.query.order_by(Document.id.desc()).all())
+def documents(): return render_template("admin/documents.html",items=Document.query.order_by(Document.year.desc().nullslast(),Document.id.desc()).all())
+
+@admin_bp.route("/documents/new",methods=["GET","POST"])
+@admin_required
+def document_new():
+ if request.method=="POST":
+  x=Document(title=request.form.get("title","").strip(),category=request.form.get("category","Other").strip(),year=int(request.form.get("year") or 0) or None,description=request.form.get("description","").strip(),file_url=request.form.get("file_url","").strip(),visibility=request.form.get("visibility","private"))
+  if not x.title or not x.file_url: flash("Title and approved document URL are required.","error")
+  else: db.session.add(x);db.session.commit();flash("Document added.","success");return redirect(url_for("admin.documents"))
+ return render_template("admin/document_form.html",item=None)
+
+@admin_bp.route("/documents/<int:id>/edit",methods=["GET","POST"])
+@admin_required
+def document_edit(id):
+ x=db.session.get(Document,id)
+ if not x:return "Document not found",404
+ if request.method=="POST":
+  x.title=request.form.get("title","").strip();x.category=request.form.get("category","Other").strip();x.year=int(request.form.get("year") or 0) or None;x.description=request.form.get("description","").strip();x.file_url=request.form.get("file_url","").strip();x.visibility=request.form.get("visibility","private");db.session.commit();flash("Document updated.","success");return redirect(url_for("admin.documents"))
+ return render_template("admin/document_form.html",item=x)
+
+@admin_bp.post("/documents/<int:id>/delete")
+@admin_required
+def document_delete(id):
+ x=db.session.get(Document,id)
+ if x: db.session.delete(x);db.session.commit();flash("Document deleted.","success")
+ return redirect(url_for("admin.documents"))
 @admin_bp.route("/settings",methods=["GET","POST"])
 @admin_required
 def settings():
