@@ -55,3 +55,91 @@ html,body{max-width:100%;overflow-x:hidden}
  .hero-3d{display:none}
  .hero-orbit,.hero-dot,.marquee-track{animation:none!important}
 }
+/* Mobile-first GSSKS responsive pass */
+.brand-wordmark-mobile{display:none}
+.loader-name-mobile{display:none}
+.nav{padding-left:max(var(--page),env(safe-area-inset-left));padding-right:max(var(--page),env(safe-area-inset-right))}
+.nav .brand{min-width:0}
+.nav .brand-wordmark{min-width:0}
+.nav .brand-wordmark strong,.nav .brand-wordmark small{overflow:hidden;text-overflow:ellipsis}
+img,svg,video,canvas{max-width:100%}
+table{max-width:100%}
+input,textarea,select,button{max-width:100%}
+.form input,.form textarea,.form select{min-width:0}
+@media(max-width:1120px){
+  .brand-wordmark-desktop{display:none}
+  .brand-wordmark-mobile{display:grid}
+  .nav{gap:10px}
+  .nav .brand{flex:1 1 auto}
+  .nav .brand-wordmark-mobile strong{font-size:1rem;letter-spacing:.13em}
+  .nav .brand-wordmark-mobile small{font-size:.42rem;max-width:210px}
+  .menu-toggle{flex:0 0 auto}
+}
+@media(max-width:760px){
+  .nav{min-height:62px;padding-top:8px;padding-bottom:8px}
+  .brand-logo-box{width:40px;height:40px}
+  .brand-logo{width:31px;height:31px}
+  .nav .brand-wordmark-mobile strong{font-size:1rem}
+  .nav .brand-wordmark-mobile small{font-size:.38rem;max-width:190px}
+  .nav nav{left:max(var(--page),env(safe-area-inset-left));right:max(var(--page),env(safe-area-inset-right));max-height:calc(100svh - 70px);padding-bottom:max(10px,env(safe-area-inset-bottom))}
+  .nav nav a{min-height:44px;display:flex;align-items:center}
+  .hero,.gssks-hero{min-height:calc(100svh - 62px)}
+  .hero-content{width:100%;padding-block:46px}
+  .hero h1,.gssks-hero h1{font-size:clamp(2.55rem,13vw,4.4rem);line-height:.94}
+  .hero p,.gssks-hero p{font-size:1rem;line-height:1.7}
+  .hero-actions,.hero-meta{width:100%}
+  .hero-actions .btn{min-height:48px}
+  .section{padding-block:clamp(42px,9vw,64px)}
+  .section-title{font-size:clamp(2rem,10vw,3.25rem)}
+  .section-lead{font-size:1rem}
+  .container{width:min(var(--max),calc(100% - 2*var(--page)))}
+  .feature-grid,.cards-grid,.impact-grid,.stats-grid,.split,.story-grid,.bento,.gallery-grid,.contact-grid,.project-detail-grid{grid-template-columns:1fr}
+  .feature-card,.project-card,.card,.gallery-card{border-radius:20px}
+  .project-art{height:clamp(170px,52vw,220px);min-height:170px}
+  .cta{border-radius:24px;gap:22px}
+  .cta .btn{width:100%}
+  .profile-strip,.featured-project,.contact-banner,.organization-card{padding:22px;border-radius:22px}
+  .organization-facts{grid-template-columns:1fr}
+  .contact-profile{padding:24px}
+  .gallery-card img{aspect-ratio:16/10}
+  .page-hero{padding-block:42px}
+  .page-hero h1{font-size:clamp(2.35rem,11vw,4rem)}
+  .page-hero p{font-size:1rem}
+  .footer{padding-bottom:max(24px,env(safe-area-inset-bottom))}
+  .footer-brand{align-items:flex-start}
+  .footer-brand img{width:60px;height:54px}
+  .footer p{font-size:.92rem}
+}
+@media(max-width:480px){
+  .brand-wordmark-mobile small{display:none}
+  .nav .brand-wordmark-mobile strong{font-size:.94rem}
+  .menu-toggle{font-size:24px;padding:5px}
+  .flash-wrap{top:70px;left:12px;right:12px;max-width:none}
+  .flash{padding:12px 13px}
+  .hero-content{padding-block:38px}
+  .hero-meta{gap:10px;font-size:.68rem}
+  .btn{width:100%;min-height:48px}
+  .hero-actions{gap:10px}
+  .card,.feature-card,.project-body{padding:20px}
+  .form.card{padding:20px}
+  .featured-project h3{font-size:clamp(1.9rem,10vw,2.6rem)}
+  .featured-project-facts span{padding:12px}
+  .contact-list p{font-size:.92rem}
+}
+@media(max-width:360px){
+  .nav{gap:7px}
+  .brand-logo-box{width:36px;height:36px}
+  .brand-logo{width:28px;height:28px}
+  .nav .brand-wordmark-mobile strong{font-size:.88rem}
+  .menu-toggle{font-size:22px}
+  .hero h1,.gssks-hero h1{font-size:2.35rem}
+  .section-title{font-size:1.9rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .brand:hover .brand-logo-box{transform:none}
+}
+@media(orientation:landscape) and (max-height:560px) and (max-width:900px){
+  .hero,.gssks-hero{min-height:auto}
+  .hero-content{padding-block:34px}
+  .hero-3d{opacity:.25}
+}
