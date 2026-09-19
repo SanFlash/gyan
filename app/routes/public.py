@@ -10,6 +10,7 @@ from ..models import (
     BlogPost,
     ImpactStatistic,
     Document,
+    GalleryItem,
 )
 
 public_bp = Blueprint("public", __name__)
@@ -157,6 +158,40 @@ def projects():
         .all()
     )
     return render_template("public/projects.html", projects=projects)
+
+
+
+
+@public_bp.get("/gallery")
+def gallery():
+    items = (
+        GalleryItem.query.filter_by(published=True)
+        .order_by(GalleryItem.sort_order, GalleryItem.event_date.desc().nullslast())
+        .all()
+    )
+    return render_template("public/gallery.html", items=items)
+
+
+@public_bp.get("/news-events")
+def news_events():
+    posts = (
+        BlogPost.query.filter_by(published=True)
+        .order_by(BlogPost.created_at.desc())
+        .limit(6)
+        .all()
+    )
+    events = Event.query.order_by(Event.event_date.desc().nullslast()).limit(6).all()
+    return render_template("public/news_events.html", posts=posts, events=events)
+
+
+@public_bp.get("/get-involved")
+def get_involved():
+    return render_template("public/get_involved.html")
+
+
+@public_bp.get("/projects/gandhi-shilp-bazaar-2024")
+def gandhi_shilp_bazaar():
+    return render_template("public/gandhi_shilp_bazaar.html")
 
 
 @public_bp.get("/projects/<slug>")
