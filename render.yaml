@@ -1,9 +1,16 @@
 services:
   - type: web
     name: gyanpath-ngo
-    env: python
+    runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn "app:create_app()"
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 run:app
+    healthCheckPath: /
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.13.7
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: AUTO_INIT_DB
+        value: "true"
+      - key: AUTO_SEED_DEMO
+        value: "false"
