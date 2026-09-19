@@ -1,0 +1,1 @@
+(()=>{const b=document.getElementById("menuToggle"),n=document.getElementById("siteNav");if(!b||!n)return;b.addEventListener("click",()=>{const o=n.classList.toggle("open");b.setAttribute("aria-expanded",o?"true":"false")});n.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>n.classList.remove("open")))})();
