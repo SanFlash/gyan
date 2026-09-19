@@ -1,28 +1,53 @@
-from flask import Blueprint,render_template,request,redirect,url_for,flash
+from flask import Blueprint,render_template,request,redirect,url_for,flash,jsonify
 from email_validator import validate_email,EmailNotValidError
 from ..extensions import db
-from ..models import Project,Event,ContactMessage,SiteSetting
+from ..models import Project,Event,ContactMessage,SiteSetting,BlogPost,ImpactStatistic,Document
 public_bp=Blueprint("public",__name__)
 @public_bp.app_context_processor
 def settings(): return {"site_settings":{x.key:x.value for x in SiteSetting.query.all()}}
 @public_bp.get("/")
-def home(): return render_template("public/home.html",projects=Project.query.filter_by(published=True).order_by(Project.created_at.desc()).limit(6).all(),events=Event.query.order_by(Event.created_at.desc()).limit(3).all())
+def home(): return render_template("public/home.html",projects=Project.query.filter_by(published=True).order_by(Project.created_at.desc()).limit(6).all(),events=Event.query.order_by(Event.event_date.asc().nullslast()).limit(3).all(),stats=ImpactStatistic.query.filter_by(published=True).order_by(ImpactStatistic.sort_order).limit(4).all())
 @public_bp.get("/about")
 def about(): return render_template("public/about.html")
+@public_bp.get("/mission")
+def mission(): return render_template("public/standard.html",eyebrow="Mission",title="Turning opportunity into meaningful community progress.",body="The organization can publish its verified mission statement here from the administration workflow.")
+@public_bp.get("/vision")
+def vision(): return render_template("public/standard.html",eyebrow="Vision",title="A future shaped by learning, skills and opportunity.",body="The organization can publish its verified vision statement here from the administration workflow.")
 @public_bp.get("/work")
 def work(): return render_template("public/work.html")
+@public_bp.get("/education")
+def education(): return render_template("public/standard.html",eyebrow="Education",title="Learning that creates possibility.",body="Education initiatives and verified programme information will be updated by the organization.")
+@public_bp.get("/women-empowerment")
+def women(): return render_template("public/standard.html",eyebrow="Women Empowerment",title="Participation, capability and opportunity.",body="Programme details will be updated by the organization.")
+@public_bp.get("/skill-development")
+def skills(): return render_template("public/standard.html",eyebrow="Skill Development",title="Practical skills for meaningful opportunity.",body="Training details will be updated by the organization.")
+@public_bp.get("/livelihood-development")
+def livelihood(): return render_template("public/standard.html",eyebrow="Livelihood Development",title="Building pathways to employment and self-employment.",body="Livelihood programme details will be updated by the organization.")
+@public_bp.get("/handicrafts")
+def handicrafts(): return render_template("public/standard.html",eyebrow="Handicrafts & Handlooms",title="Preserving craft while creating opportunity.",body="Craft, handloom, jute and textile programme information will be updated by the organization.")
 @public_bp.get("/projects")
 def projects(): return render_template("public/projects.html",projects=Project.query.filter_by(published=True).order_by(Project.created_at.desc()).all())
 @public_bp.get("/projects/<slug>")
 def project_detail(slug): return render_template("public/project_detail.html",project=Project.query.filter_by(slug=slug,published=True).first_or_404())
 @public_bp.get("/events")
-def events(): return render_template("public/events.html",events=Event.query.order_by(Event.created_at.desc()).all())
+def events(): return render_template("public/events.html",events=Event.query.order_by(Event.event_date.asc().nullslast()).all())
+@public_bp.get("/blog")
+def blog(): return render_template("public/blog.html",posts=BlogPost.query.filter_by(published=True).order_by(BlogPost.created_at.desc()).all())
+@public_bp.get("/impact")
+def impact(): return render_template("public/impact.html",stats=ImpactStatistic.query.filter_by(published=True).order_by(ImpactStatistic.sort_order).all())
+@public_bp.get("/reports")
+def reports(): return render_template("public/reports.html",documents=Document.query.filter_by(visibility="public").order_by(Document.year.desc().nullslast()).all())
 @public_bp.route("/contact",methods=["GET","POST"])
 def contact():
     if request.method=="POST":
-        name=request.form.get("name","").strip(); email=request.form.get("email","").strip(); message=request.form.get("message","").strip()
+        name=request.form.get("name","").strip();email=request.form.get("email","").strip();message=request.form.get("message","").strip()
         try: validate_email(email)
-        except EmailNotValidError: flash("Enter a valid email address.","error"); return render_template("public/contact.html")
+        except EmailNotValidError: flash("Enter a valid email address.","error");return render_template("public/contact.html")
         if not name or not message: flash("Name and message are required.","error")
-        else: db.session.add(ContactMessage(name=name,email=email,phone=request.form.get("phone",""),subject=request.form.get("subject",""),message=message)); db.session.commit(); flash("Your message has been received.","success"); return redirect(url_for("public.contact"))
+        else:
+            db.session.add(ContactMessage(name=name,email=email,phone=request.form.get("phone",""),subject=request.form.get("subject",""),message=message));db.session.commit();flash("Your message has been received.","success");return redirect(url_for("public.contact"))
     return render_template("public/contact.html")
+@public_bp.get("/api/health")
+def health(): return jsonify(ok=True,service="gyanpath",database="connected")
+@public_bp.get("/api/projects")
+def api_projects(): return jsonify(items=[{"title":p.title,"slug":p.slug,"category":p.category,"status":p.status} for p in Project.query.filter_by(published=True).all()])
