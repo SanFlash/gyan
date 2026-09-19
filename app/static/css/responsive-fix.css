@@ -143,3 +143,8 @@ input,textarea,select,button{max-width:100%}
   .hero-content{padding-block:34px}
   .hero-3d{opacity:.25}
 }
+
+@media(max-width:1120px){
+  .loader-name-desktop{display:none}
+  .loader-name-mobile{display:inline}
+}
