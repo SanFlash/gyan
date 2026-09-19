@@ -211,7 +211,7 @@ def documents(): return render_template("admin/documents.html",items=Document.qu
 @admin_required
 def document_new():
  if request.method=="POST":
-  x=Document(title=request.form.get("title","").strip(),category=request.form.get("category","Other").strip(),year=int(request.form.get("year") or 0) or None,description=request.form.get("description","").strip(),file_url=request.form.get("file_url","").strip(),visibility=request.form.get("visibility","private"))
+  x=Document(title=request.form.get("title","").strip(),category=request.form.get("category","Other").strip(),year=int(request.form.get("year") or 0) or None,description=request.form.get("description","").strip(),file_url=_media_url("document","gyanpath/documents"),visibility=request.form.get("visibility","private"))
   if not x.title or not x.file_url: flash("Title and approved document URL are required.","error")
   else: db.session.add(x);db.session.commit();flash("Document added.","success");return redirect(url_for("admin.documents"))
  return render_template("admin/document_form.html",item=None)
@@ -222,7 +222,7 @@ def document_edit(id):
  x=db.session.get(Document,id)
  if not x:return "Document not found",404
  if request.method=="POST":
-  x.title=request.form.get("title","").strip();x.category=request.form.get("category","Other").strip();x.year=int(request.form.get("year") or 0) or None;x.description=request.form.get("description","").strip();x.file_url=request.form.get("file_url","").strip();x.visibility=request.form.get("visibility","private");db.session.commit();flash("Document updated.","success");return redirect(url_for("admin.documents"))
+  x.title=request.form.get("title","").strip();x.category=request.form.get("category","Other").strip();x.year=int(request.form.get("year") or 0) or None;x.description=request.form.get("description","").strip();new_url=_media_url("document","gyanpath/documents");x.file_url=new_url or x.file_url;x.visibility=request.form.get("visibility","private");db.session.commit();flash("Document updated.","success");return redirect(url_for("admin.documents"))
  return render_template("admin/document_form.html",item=x)
 
 @admin_bp.post("/documents/<int:id>/delete")
