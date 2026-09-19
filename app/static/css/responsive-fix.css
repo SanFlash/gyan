@@ -392,3 +392,33 @@ table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
     line-height:1.18;
   }
 }
+
+/* Definitive mobile-safe hero title */
+.mobile-safe-hero-title{width:100%;max-width:100%;overflow:visible;word-break:normal;overflow-wrap:normal}
+@media(max-width:900px){
+  .gssks-hero .mobile-safe-hero-title{
+    font-size:2rem!important;
+    line-height:1.08!important;
+    letter-spacing:-.015em!important;
+    width:100%!important;
+    max-width:100%!important;
+  }
+}
+@media(max-width:600px){
+  .gssks-hero .mobile-safe-hero-title{
+    font-size:1.75rem!important;
+    line-height:1.12!important;
+  }
+}
+@media(max-width:420px){
+  .gssks-hero .mobile-safe-hero-title{
+    font-size:1.55rem!important;
+    line-height:1.15!important;
+  }
+}
+@media(max-width:360px){
+  .gssks-hero .mobile-safe-hero-title{
+    font-size:1.45rem!important;
+    line-height:1.18!important;
+  }
+}
