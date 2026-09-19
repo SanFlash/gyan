@@ -6,6 +6,8 @@ services:
     startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 run:app
     healthCheckPath: /
     envVars:
+      - key: PYTHON_VERSION
+        value: "3.13.5"
       - key: SECRET_KEY
         generateValue: true
       - key: DATABASE_URL
