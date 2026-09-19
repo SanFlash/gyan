@@ -29,5 +29,7 @@ class ImpactStatistic(T,db.Model):
     id=db.Column(db.Integer,primary_key=True); label=db.Column(db.String(120),nullable=False); value=db.Column(db.String(60),default="0"); published=db.Column(db.Boolean,default=True); sort_order=db.Column(db.Integer,default=0)
 class Document(T,db.Model):
     id=db.Column(db.Integer,primary_key=True); title=db.Column(db.String(200),nullable=False); category=db.Column(db.String(100),default="Other"); year=db.Column(db.Integer); description=db.Column(db.Text,default=""); file_url=db.Column(db.String(700),nullable=False); visibility=db.Column(db.String(30),default="public")
+class GalleryItem(T,db.Model):
+    id=db.Column(db.Integer,primary_key=True); title=db.Column(db.String(200),nullable=False); category=db.Column(db.String(100),default="Other"); image_url=db.Column(db.String(700),default=""); location=db.Column(db.String(180),default=""); event_date=db.Column(db.Date,nullable=True); description=db.Column(db.Text,default=""); published=db.Column(db.Boolean,default=False); sort_order=db.Column(db.Integer,default=0)
 class SiteSetting(db.Model):
     id=db.Column(db.Integer,primary_key=True); key=db.Column(db.String(100),unique=True,nullable=False); value=db.Column(db.Text,default="")
