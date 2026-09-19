@@ -290,3 +290,27 @@ def api_projects():
             for project in projects
         ]
     )
+
+
+@public_bp.get("/robots.txt")
+def robots():
+    return "User-agent: *\nAllow: /\nSitemap: " + url_for("public.sitemap", _external=True), 200, {"Content-Type": "text/plain; charset=utf-8"}
+
+
+@public_bp.get("/sitemap.xml")
+def sitemap():
+    urls = [
+        url_for("public.home", _external=True),
+        url_for("public.about", _external=True),
+        url_for("public.work", _external=True),
+        url_for("public.projects", _external=True),
+        url_for("public.impact", _external=True),
+        url_for("public.gallery", _external=True),
+        url_for("public.news_events", _external=True),
+        url_for("public.get_involved", _external=True),
+        url_for("public.reports", _external=True),
+        url_for("public.contact", _external=True),
+        url_for("public.gandhi_shilp_bazaar", _external=True),
+    ]
+    body = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "".join(f"<url><loc>{u}</loc></url>" for u in urls) + "</urlset>"
+    return body, 200, {"Content-Type": "application/xml; charset=utf-8"}
