@@ -1,0 +1,1 @@
+{% extends "base.html" %}{% block title %}{{ code }} | Gyanpath{% endblock %}{% block content %}<section class="section"><div class="container narrow error-card"><span class="eyebrow">Gyanpath</span><h1 class="section-title">{{ code }}</h1><p class="section-lead">{{ message }}</p><a class="btn" href="{{ url_for('public.home') }}">Return home</a></div></section>{% endblock %}
