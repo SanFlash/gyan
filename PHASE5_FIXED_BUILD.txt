@@ -1,0 +1,2 @@
+Gyanpath NGO — Phase 5 Fixed Functional Build
+Includes the Phase 4 immersive visual layer plus authentication/admin cleanup, deterministic seeding, responsive admin/auth templates and a verification helper.
