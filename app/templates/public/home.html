@@ -5,7 +5,8 @@
   <canvas id="gyanpath-3d" class="hero-3d"></canvas><div class="hero-grid"></div><div class="hero-glow"></div><div class="hero-orbit"></div>
   <div class="hero-particle p1"></div><div class="hero-particle p2"></div><div class="hero-particle p3"></div>
   <div class="container hero-content">
-    <span class="hero-kicker">Gyanpath Shiksha Evam Samaj Kalyan Samiti · Bhopal</span>
+    <div class="hero-brand-lockup"><img src="{{ url_for('static',filename='img/gyanpath-logo.svg') }}" alt="Gyanpath logo"><span><b>GYAN PATH</b><small>Shiksha Evam Samaj Kalyan Samiti</small></span></div>
+    <span class="hero-kicker">Recognised by M.P. Govt. · Est. 1992 · Bhopal</span>
     <h1>Education. <em>Opportunity.</em><br>Craft. Community.</h1>
     <p>A modern digital home for education, social welfare, skills, livelihoods, women empowerment and traditional craft.</p>
     <div class="hero-actions"><a class="btn btn-primary" href="{{url_for('public.work')}}">Explore our work</a><a class="btn btn-light" href="{{url_for('public.projects')}}">View projects</a></div>
@@ -14,7 +15,7 @@
   <div class="hero-side-card"><small>PUBLIC RECORD</small><strong>410</strong><span>artisans listed in an MSME SFURTI cluster record</span></div>
 </section>
 <section class="ticker"><div>{% for x in ['Education','Women Empowerment','Skill Development','Livelihood Development','Handicrafts','Handlooms','Artisan Development','Community Development'] %}<span>{{x}}</span>{% endfor %}</div></section>
-
+<section class="section"><div class="container"><div class="organization-card reveal"><div><span class="eyebrow">Organization profile</span><h2 class="section-title">Gyan Path Shiksha Evam Samaj Kalyan Samiti</h2><p class="section-lead">Sundar Nagar, Chhola Road, Behind Sudhera Maidan, Block Fanda, Bhopal (M.P.).</p></div><div class="organization-facts"><span><b>President</b>I.S. Chauhan</span><span><b>Registration</b>1262/92</span><span><b>Contact</b>09826366176</span></div></div></div></section>
 <section class="section"><div class="container">
 <div class="section-head reveal"><span class="eyebrow">A documented footprint</span><h2 class="section-title">Evidence-led content, not empty claims.</h2><p class="section-lead">Public Government records provide a documented window into Gyanpath's craft and livelihood work. Current programmes remain organization-managed and clearly labelled.</p></div>
 <div class="bento reveal">
@@ -24,19 +25,8 @@
 <article class="bento-card"><span class="pill">Ministry of Textiles</span><strong>Rs. 19.20L</strong><p>2024–25 non-recurring Emporium amount recorded for Gyanpath.</p></article>
 <article class="bento-card"><span class="pill">Bhopal</span><strong>Craft + livelihood</strong><p>Public records connect the organization with craft, artisan and livelihood-oriented activity.</p></article>
 </div></div></section>
-
-<section class="section dark-section"><div class="container"><div class="section-head reveal"><span class="eyebrow gold">Verified references</span><h2 class="section-title light">Selected public-record signals.</h2></div>
-<div class="stats-grid">{% for s in stats %}<div class="stat reveal"><strong>{{s.value}}</strong><span>{{s.label}}</span></div>{% endfor %}</div>
-<div class="source-strip"><span>Sources: Ministry of MSME · Ministry of Textiles · Government of India Handlooms portal</span><a href="https://dashboard.msme.gov.in/sfurti_approved_details.aspx?FY=2019-2020" target="_blank" rel="noopener">MSME ↗</a><a href="https://www.texmin.gov.in/" target="_blank" rel="noopener">Textiles Ministry ↗</a></div>
-</div></section>
-
-<section class="section"><div class="container"><div class="section-head"><span class="eyebrow">Focus areas</span><h2 class="section-title">People, capability and opportunity.</h2></div>
-<div class="feature-grid stagger">{% for href,title,text in [(url_for('public.education'),'Education','Learning and education initiatives.'),(url_for('public.women'),'Women empowerment','Participation, capability and opportunity.'),(url_for('public.skills'),'Skill development','Training and practical skills.'),(url_for('public.livelihood'),'Livelihood development','Employment and self-employment pathways.'),(url_for('public.handicrafts'),'Handicrafts & handlooms','Traditional craft and artisan development.'),(url_for('public.work'),'Community development','Community-focused development activities.')] %}<a class="feature-card" href="{{href}}"><span class="icon">{{'%02d'|format(loop.index)}}</span><h3>{{title}}</h3><p>{{text}}</p><span class="card-arrow">Explore ↗</span></a>{% endfor %}</div>
-</div></section>
-
-<section class="section"><div class="container"><div class="section-head"><span class="eyebrow">Published projects</span><h2 class="section-title">Explore organization-managed content.</h2></div>
-<div class="cards-grid stagger">{% for p in projects %}<article class="project-card"><div class="project-art"><span>{{p.category}}</span><i></i></div><div class="project-body"><small>{{p.location}}</small><h3>{{p.title}}</h3><p>{{p.short_description or p.description[:180]}}</p><a href="{{url_for('public.project_detail',slug=p.slug)}}" class="text-link">View details →</a></div></article>{% else %}<div class="empty">Projects will appear here when published through Admin.</div>{% endfor %}</div>
-</div></section>
-
+<section class="section dark-section"><div class="container"><div class="section-head reveal"><span class="eyebrow gold">Verified references</span><h2 class="section-title light">Selected public-record signals.</h2></div><div class="stats-grid">{% for s in stats %}<div class="stat reveal"><strong>{{s.value}}</strong><span>{{s.label}}</span></div>{% endfor %}</div><div class="source-strip"><span>Sources: Ministry of MSME · Ministry of Textiles · Government of India Handlooms portal</span><a href="https://dashboard.msme.gov.in/sfurti_approved_details.aspx?FY=2019-2020" target="_blank" rel="noopener">MSME ↗</a><a href="https://www.texmin.gov.in/" target="_blank" rel="noopener">Textiles Ministry ↗</a></div></div></section>
+<section class="section"><div class="container"><div class="section-head"><span class="eyebrow">Focus areas</span><h2 class="section-title">People, capability and opportunity.</h2></div><div class="feature-grid stagger">{% for href,title,text in [(url_for('public.education'),'Education','Learning and education initiatives.'),(url_for('public.women'),'Women empowerment','Participation, capability and opportunity.'),(url_for('public.skills'),'Skill development','Training and practical skills.'),(url_for('public.livelihood'),'Livelihood development','Employment and self-employment pathways.'),(url_for('public.handicrafts'),'Handicrafts & handlooms','Traditional craft and artisan development.'),(url_for('public.work'),'Community development','Community-focused development activities.')] %}<a class="feature-card" href="{{href}}"><span class="icon">{{'%02d'|format(loop.index)}}</span><h3>{{title}}</h3><p>{{text}}</p><span class="card-arrow">Explore ↗</span></a>{% endfor %}</div></div></section>
+<section class="section"><div class="container"><div class="section-head"><span class="eyebrow">Published projects</span><h2 class="section-title">Explore organization-managed content.</h2></div><div class="cards-grid stagger">{% for p in projects %}<article class="project-card"><div class="project-art"><span>{{p.category}}</span><i></i></div><div class="project-body"><small>{{p.location}}</small><h3>{{p.title}}</h3><p>{{p.short_description or p.description[:180]}}</p><a href="{{url_for('public.project_detail',slug=p.slug)}}" class="text-link">View details →</a></div></article>{% else %}<div class="empty">Projects will appear here when published through Admin.</div>{% endfor %}</div></div></section>
 <section class="section"><div class="container"><div class="cta immersive-cta"><div><span class="eyebrow gold">Get involved</span><h2>Volunteer, participate or support.</h2><p>Send an enquiry, volunteer or explore the organization's published information.</p></div><div class="hero-actions"><a class="btn btn-primary" href="{{url_for('phase2.volunteer')}}">Volunteer</a><a class="btn btn-light" href="{{url_for('public.contact')}}">Contact</a></div></div></div></section>
 {% endblock %}
