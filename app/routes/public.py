@@ -12,6 +12,7 @@ from ..models import (
     ImpactStatistic,
     Document,
     GalleryItem,
+    SiteSection,
 )
 
 public_bp = Blueprint("public", __name__)
@@ -35,6 +36,7 @@ def home():
     stats = []
     projects = []
     events = []
+    sections = []
 
     try:
         gallery = (
@@ -60,6 +62,7 @@ def home():
             .limit(3)
             .all()
         )
+        sections = (SiteSection.query.filter_by(placement="home", published=True).order_by(SiteSection.sort_order, SiteSection.id).all())
     except Exception:
         db.session.rollback()
         # Keep the public homepage available while the database is being
@@ -80,6 +83,7 @@ def home():
         events=events,
         stats=stats,
         gallery=gallery,
+        sections=sections,
     )
 
 
