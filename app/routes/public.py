@@ -113,6 +113,16 @@ def work():
     return render_template("public/work.html")
 
 
+@public_bp.get("/icps")
+def icps():
+    return render_template("public/icps.html")
+
+
+@public_bp.get("/recognition")
+def recognition():
+    return render_template("public/recognition.html")
+
+
 @public_bp.get("/education")
 def education():
     return render_template(
@@ -354,7 +364,9 @@ def sitemap():
     urls = [
         url_for("public.home", _external=True),
         url_for("public.about", _external=True),
+        url_for("public.icps", _external=True),
         url_for("public.work", _external=True),
+        url_for("public.recognition", _external=True),
         url_for("public.projects", _external=True),
         url_for("public.impact", _external=True),
         url_for("public.gallery", _external=True),
