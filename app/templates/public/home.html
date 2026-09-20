@@ -2,20 +2,25 @@
 {% block title %}Gyan Path Shiksha Evam Samaj Kalyan Samiti | GSSKS Bhopal{% endblock %}
 {% block content %}
 <section class="hero gssks-hero">
+  <canvas id="gssksAmbientCanvas" class="hero-visual-canvas" aria-hidden="true"></canvas>
+  <div class="hero-vignette" aria-hidden="true"></div>
+  <div class="gssks-floating-orb one" aria-hidden="true"></div>
+  <div class="gssks-floating-orb two" aria-hidden="true"></div>
   <div class="container hero-content">
     <span class="hero-kicker">GSSKS · Established 1992 · Recognised by M.P. Government</span>
     <h1 class="mobile-safe-hero-title">Education.<br><em>Awareness.</em><br>Empowerment.</h1>
     <p>Gyan Path Shiksha Evam Samaj Kalyan Samiti is a social-development organisation working toward education, awareness, empowerment and community development.</p>
     <div class="hero-actions"><a class="btn btn-primary" href="{{url_for('public.work')}}">Explore Our Work</a><a class="btn btn-light" href="{{url_for('public.contact')}}">Contact Us</a></div>
-  </div>
+  <aside class="hero-proof"><b>₹14,95,577+</b><span>reported sales during Gandhi Shilp Bazaar 2024 · 50 artisans · Bhopal</span></aside>
+</div>
 </section>
 
-<section class="section"><div class="container">
+<section class="section motion-section"><div class="container">
   <div class="section-head"><span class="eyebrow">About GSSKS</span><h2 class="section-title">A clear, documented public profile.</h2><p class="section-lead">GSSKS was established in 1992 and is recognised by the Government of Madhya Pradesh. This website is designed as an official publishing space where verified organisational information, programmes, photographs and documents can be maintained by authorised staff.</p></div>
   <div class="profile-strip"><div><strong>Gyan Path Shiksha Evam Samaj Kalyan Samiti</strong><span>Registration No. 1262/92</span></div><div><strong>Bhopal, Madhya Pradesh</strong><span>Sunder Nagar, Chhola Road, Behind Dussehra Maidan, Block Fanda</span></div></div>
 </div></section>
 
-<section class="section section-soft"><div class="container">
+<section class="section section-soft motion-section"><div class="container">
   <div class="section-head"><span class="eyebrow">Our Work</span><h2 class="section-title">Areas presented for organisational confirmation.</h2><p class="section-lead">The brief identifies education, awareness, empowerment and community development as core themes, and asks GSSKS to confirm its final intervention list before publication.</p></div>
   <div class="cards-grid">
     {% for title,text in [('Education','Education and learning-related work.'),('Awareness','Awareness and public/community engagement.'),('Empowerment','Empowerment-focused development work.'),('Community Development','Community-focused initiatives and participation.'),('Artisan & Livelihood Development','Documented artisan and livelihood-related activity, including the featured Gandhi Shilp Bazaar programme.'),('Other Verified Activities','Additional programmes will appear only after GSSKS provides and approves the details.')] %}
@@ -24,7 +29,7 @@
   </div>
 </div></section>
 
-<section class="section dark-section"><div class="container">
+<section class="section dark-section motion-section"><div class="container">
   <div class="section-head"><span class="eyebrow gold">Our Impact</span><h2 class="section-title light">Verified figures currently available.</h2><p class="section-lead">The featured programme below is documented in the supplied GSSKS brief. More figures can be published through Admin when verified.</p></div>
   <div class="impact-grid">
     <div class="impact-card"><strong>1992</strong><span>Year established</span></div>
@@ -34,17 +39,17 @@
   </div>
 </div></section>
 
-<section class="section"><div class="container">
+<section class="section motion-section"><div class="container">
   <div class="section-head"><span class="eyebrow">Featured Project</span><h2 class="section-title">Gandhi Shilp Bazaar</h2><p class="section-lead">11–17 September 2024 · Urban Haat, Gauhar Mahal, Bhopal.</p></div>
-  <article class="featured-project"><div class="featured-project-copy"><span class="pill">Documented programme</span><h3>50 artisans. More than ₹14,95,577 in reported sales.</h3><p>The supplied brief documents the seven-day Gandhi Shilp Bazaar programme conducted by GSSKS under the MSS of the Ministry of Textiles, Government of India, at Urban Haat, Gauhar Mahal, Bhopal.</p><a class="btn btn-primary" href="{{url_for('public.gandhi_shilp_bazaar')}}">View project</a></div><div class="featured-project-facts"><span><b>Dates</b>11–17 Sep 2024</span><span><b>Location</b>Urban Haat, Gauhar Mahal</span><span><b>Beneficiaries</b>50 artisans</span><span><b>Reported sales</b>₹14,95,577+</span></div></article>
+  <article class="featured-project lift-card"><div class="featured-project-copy"><span class="pill">Documented programme</span><h3>50 artisans. More than ₹14,95,577 in reported sales.</h3><p>The supplied brief documents the seven-day Gandhi Shilp Bazaar programme conducted by GSSKS under the MSS of the Ministry of Textiles, Government of India, at Urban Haat, Gauhar Mahal, Bhopal.</p><a class="btn btn-primary" href="{{url_for('public.gandhi_shilp_bazaar')}}">View project</a></div><div class="featured-project-facts"><span><b>Dates</b>11–17 Sep 2024</span><span><b>Location</b>Urban Haat, Gauhar Mahal</span><span><b>Beneficiaries</b>50 artisans</span><span><b>Reported sales</b>₹14,95,577+</span></div></article>
 </div></section>
 
-<section class="section section-soft"><div class="container"><div class="section-head"><span class="eyebrow">Photo Gallery</span><h2 class="section-title">Real photographs, published with approval.</h2><p class="section-lead">The gallery stays empty until authorised staff upload and publish approved photographs.</p></div><div class="gallery-grid home-gallery">{% for x in gallery %}<figure class="gallery-card"><img src="{{x.image_url}}" alt="{{x.title}}" loading="lazy"><figcaption><span class="pill">{{x.category}}</span><h3>{{x.title}}</h3></figcaption></figure>{% else %}<div class="empty"><div><strong>No photographs published yet.</strong><span>Approved programme photographs will appear here after GSSKS adds them from Admin.</span></div></div>{% endfor %}</div><a class="text-link" href="{{url_for('public.gallery')}}">Open full gallery →</a></div></section>
+<section class="section section-soft motion-section"><div class="container"><div class="section-head"><span class="eyebrow">Photo Gallery</span><h2 class="section-title">Real photographs, published with approval.</h2><p class="section-lead">The gallery stays empty until authorised staff upload and publish approved photographs.</p></div><div class="gallery-grid home-gallery">{% for x in gallery %}<figure class="gallery-card"><img src="{{x.image_url}}" alt="{{x.title}}" loading="lazy"><figcaption><span class="pill">{{x.category}}</span><h3>{{x.title}}</h3></figcaption></figure>{% else %}<div class="empty"><div><strong>No photographs published yet.</strong><span>Approved programme photographs will appear here after GSSKS adds them from Admin.</span></div></div>{% endfor %}</div><a class="text-link" href="{{url_for('public.gallery')}}">Open full gallery →</a></div></section>
 
-<section class="section"><div class="container">
+<section class="section motion-section"><div class="container">
   <div class="section-head"><span class="eyebrow">Get Involved</span><h2 class="section-title">Partner, volunteer, support or collaborate.</h2></div>
   <div class="cards-grid"><a class="card" href="{{url_for('public.get_involved')}}"><h3>Get Involved</h3><p>Explore participation routes for individuals and organisations.</p><span class="text-link">Explore options →</span></a><a class="card" href="{{url_for('public.reports')}}"><h3>Documents</h3><p>View official documents that GSSKS has approved for public download.</p><span class="text-link">View documents →</span></a><a class="card" href="{{url_for('public.news_events')}}"><h3>News & Events</h3><p>Follow published programmes, announcements and updates.</p><span class="text-link">View updates →</span></a></div>
 </div></section>
 
-<section class="section"><div class="container"><div class="contact-banner"><div><span class="eyebrow">Contact Us</span><h2>Connect with GSSKS, Bhopal.</h2><p>Sunder Nagar, Chhola Road, Behind Dussehra Maidan, Block Fanda, Bhopal, Madhya Pradesh – 462001</p></div><div class="hero-actions"><a class="btn btn-primary" href="tel:+917554278487">Call 0755-4278487</a><a class="btn btn-outline-dark" href="{{url_for('public.contact')}}">Send enquiry</a></div></div></div></section>
+<section class="section motion-section"><div class="container"><div class="contact-banner lift-card"><div><span class="eyebrow">Contact Us</span><h2>Connect with GSSKS, Bhopal.</h2><p>Sunder Nagar, Chhola Road, Behind Dussehra Maidan, Block Fanda, Bhopal, Madhya Pradesh – 462001</p></div><div class="hero-actions"><a class="btn btn-primary" href="tel:+917554278487">Call 0755-4278487</a><a class="btn btn-outline-dark" href="{{url_for('public.contact')}}">Send enquiry</a></div></div></div></section>
 {% endblock %}
