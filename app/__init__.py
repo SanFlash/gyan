@@ -20,7 +20,7 @@ def create_app(config_class=Config):
   with app.app_context(): db.create_all();ensure_demo()
  return app
 def ensure_demo():
- if os.getenv("AUTO_SEED_DEMO","true").lower()!="true": return
+ if os.getenv("AUTO_SEED_DEMO","false").lower()!="true": return
  admin=User.query.filter_by(email="admin.demo@gyanpath.local").first() or User(name="Gyanpath Admin",email="admin.demo@gyanpath.local",role="admin")
  admin.name="Gyanpath Admin";admin.role="admin";admin.is_active=True;admin.set_password("Gyanpath@Demo2026!");db.session.add(admin)
  user=User.query.filter_by(email="user.demo@gyanpath.local").first() or User(name="Demo User",email="user.demo@gyanpath.local",role="customer")
