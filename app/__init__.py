@@ -28,7 +28,11 @@ def create_app(config_class=Config):
 
     @app.errorhandler(404)
     def e404(e):
-        return render_template("errors/error.html", code=404, message="Page not found"), 404
+        return render_template(
+            "errors/error.html",
+            code=404,
+            message="Page not found",
+        ), 404
 
     @app.errorhandler(500)
     def e500(e):
@@ -36,20 +40,22 @@ def create_app(config_class=Config):
         return render_template(
             "errors/error.html",
             code=500,
-            message="Something went wrong. Check the server logs for the root cause.",
+            message="Something went wrong. Check deployment logs.",
         ), 500
 
-    # Render can keep using its existing auto-init behavior. Vercel should
-    # normally use a persistent hosted PostgreSQL database and migrations.
-    # The only automatic Vercel schema creation is the /tmp fallback used when
-    # DATABASE_URL has not been configured for a preview.
+    # A fresh deployment must be able to boot. create_all() is intentionally
+    # limited to startup initialization; existing tables/data are preserved.
+    # Render and Vercel can disable this later once migrations are established.
     if app.config.get("AUTO_INIT_DB", True):
         with app.app_context():
             try:
                 db.create_all()
                 ensure_demo()
-            except Exception as exc:
-                app.logger.exception("Database initialization failed: %s", exc)
+            except Exception:
+                # Do not make the entire Flask import fail because a database
+                # is temporarily unavailable. Database-backed requests will
+                # report their own error and /api/health exposes DB status.
+                app.logger.exception("Database initialization failed")
 
     return app
 
