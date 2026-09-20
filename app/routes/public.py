@@ -19,51 +19,60 @@ public_bp = Blueprint("public", __name__)
 
 @public_bp.app_context_processor
 def settings():
-    return {"site_settings": {x.key: x.value for x in SiteSetting.query.all()}}
+    # The public site must remain renderable if PostgreSQL is briefly
+    # unavailable during a serverless cold start.
+    try:
+        values = {x.key: x.value for x in SiteSetting.query.all()}
+    except Exception:
+        db.session.rollback()
+        values = {}
+    return {"site_settings": values}
 
 
 @public_bp.get("/")
 def home():
-    gallery = (GalleryItem.query.filter_by(published=True).order_by(GalleryItem.sort_order, GalleryItem.id.desc()).limit(6).all())
+    gallery = []
+    stats = []
+    projects = []
+    events = []
 
-    stats = (
-        ImpactStatistic.query.filter_by(published=True)
-        .order_by(ImpactStatistic.sort_order)
-        .limit(4)
-        .all()
-    )
+    try:
+        gallery = (
+            GalleryItem.query.filter_by(published=True)
+            .order_by(GalleryItem.sort_order, GalleryItem.id.desc())
+            .limit(6)
+            .all()
+        )
+        stats = (
+            ImpactStatistic.query.filter_by(published=True)
+            .order_by(ImpactStatistic.sort_order)
+            .limit(4)
+            .all()
+        )
+        projects = (
+            Project.query.filter_by(published=True)
+            .order_by(Project.created_at.desc())
+            .limit(6)
+            .all()
+        )
+        events = (
+            Event.query.order_by(Event.event_date.asc().nullslast())
+            .limit(3)
+            .all()
+        )
+    except Exception:
+        db.session.rollback()
+        # Keep the public homepage available while the database is being
+        # configured or recovering. The database health endpoint exposes the
+        # underlying connectivity state.
 
     if not stats:
         stats = [
-            {
-                "value": "410",
-                "label": "Artisans listed in an MSME SFURTI cluster record",
-            },
-            {
-                "value": "Rs. 233.92L",
-                "label": "GOI grant / NA share in that record",
-            },
-            {
-                "value": "Rs. 20.16L",
-                "label": "IA / SPV share in that record",
-            },
-            {
-                "value": "2023–24",
-                "label": "Government handicrafts marketing calendar reference",
-            },
+            {"value": "410", "label": "Artisans listed in an MSME SFURTI cluster record"},
+            {"value": "Rs. 233.92L", "label": "GOI grant / NA share in that record"},
+            {"value": "Rs. 20.16L", "label": "IA / SPV share in that record"},
+            {"value": "2023–24", "label": "Government handicrafts marketing calendar reference"},
         ]
-
-    projects = (
-        Project.query.filter_by(published=True)
-        .order_by(Project.created_at.desc())
-        .limit(6)
-        .all()
-    )
-    events = (
-        Event.query.order_by(Event.event_date.asc().nullslast())
-        .limit(3)
-        .all()
-    )
 
     return render_template(
         "public/home.html",
