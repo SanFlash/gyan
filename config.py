@@ -7,7 +7,7 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 IS_VERCEL = bool(os.getenv("VERCEL") or os.getenv("VERCEL_ENV"))
 INSTANCE_DIR = os.path.join(BASE_DIR, "instance")
 
-# Vercel Functions have a read-only filesystem except for /tmp.
+# Vercel's filesystem is read-only except for /tmp.
 if not IS_VERCEL:
     os.makedirs(INSTANCE_DIR, exist_ok=True)
 
@@ -17,16 +17,14 @@ if db_url.startswith("postgres://"):
 elif db_url.startswith("postgresql://"):
     db_url = "postgresql+psycopg://" + db_url[len("postgresql://"):]
 
-# Production Vercel should use DATABASE_URL with hosted PostgreSQL.
-# /tmp is only a resilience fallback for an unconfigured preview.
 if db_url:
     database_uri = db_url
 elif IS_VERCEL:
+    # Temporary fallback so a preview can boot even before PostgreSQL is added.
+    # This is NOT persistent storage and should not be used for production data.
     database_uri = "sqlite:////tmp/gyanpath-vercel.db"
 else:
     database_uri = "sqlite:///" + os.path.join(INSTANCE_DIR, "gyanpath.db")
-
-default_auto_init = "true" if (not IS_VERCEL or not db_url) else "false"
 
 class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-only-change-me")
@@ -39,5 +37,9 @@ class Config:
         "SESSION_COOKIE_SECURE",
         "true" if IS_VERCEL else "false",
     ).lower() == "true"
-    AUTO_INIT_DB = os.getenv("AUTO_INIT_DB", default_auto_init).lower() == "true"
+
+    # Default to true so a fresh Vercel PostgreSQL database can boot without
+    # an extra migration command. Set AUTO_INIT_DB=false after the schema is
+    # established if you want migrations to be the only schema manager.
+    AUTO_INIT_DB = os.getenv("AUTO_INIT_DB", "true").lower() == "true"
     IS_VERCEL = IS_VERCEL
