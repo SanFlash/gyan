@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
+from sqlalchemy import text
 from email_validator import validate_email, EmailNotValidError
 
 from ..extensions import db
@@ -273,7 +274,19 @@ def contact():
 
 @public_bp.get("/api/health")
 def health():
-    return jsonify(ok=True, service="gyanpath")
+    database = "ok"
+    try:
+        db.session.execute(text("SELECT 1"))
+    except Exception as exc:
+        db.session.rollback()
+        database = f"error: {type(exc).__name__}"
+
+    return jsonify(
+        ok=database == "ok",
+        service="gyanpath",
+        database=database,
+        vercel=bool(__import__("os").getenv("VERCEL") or __import__("os").getenv("VERCEL_ENV")),
+    ), (200 if database == "ok" else 503)
 
 
 @public_bp.get("/api/projects")
