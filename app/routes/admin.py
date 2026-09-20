@@ -3,7 +3,7 @@ from flask import Blueprint,render_template,request,redirect,url_for,flash
 import os
 from flask_login import login_required,current_user
 from ..extensions import db
-from ..models import User,Project,ProjectBrief,Event,ContactMessage,VolunteerApplication,Donation,Artisan,BlogPost,ImpactStatistic,Document,GalleryItem,SiteSetting
+from ..models import User,Project,ProjectBrief,Event,ContactMessage,VolunteerApplication,Donation,Artisan,BlogPost,ImpactStatistic,Document,GalleryItem,SiteSetting,SiteSection
 admin_bp=Blueprint("admin",__name__,url_prefix="/admin")
 def _media_url(field_name, folder):
  f=request.files.get(field_name)
@@ -249,3 +249,38 @@ def status_update(model,id):
  if obj:
   obj.status=request.form.get("status",obj.status);db.session.commit();flash("Status updated.","success")
  return redirect(request.referrer or url_for("admin.dashboard"))
+
+@admin_bp.get("/sections")
+@admin_required
+def sections():
+ return render_template("admin/sections.html",items=SiteSection.query.order_by(SiteSection.placement,SiteSection.sort_order,SiteSection.id).all())
+
+@admin_bp.route("/sections/new",methods=["GET","POST"])
+@admin_required
+def section_new():
+ if request.method=="POST":
+  x=SiteSection(slug=request.form.get("slug","").strip().lower(),eyebrow=request.form.get("eyebrow","").strip(),title=request.form.get("title","").strip(),body=request.form.get("body","").strip(),image_url=request.form.get("image_url","").strip(),cta_label=request.form.get("cta_label","").strip(),cta_url=request.form.get("cta_url","").strip(),placement=request.form.get("placement","home").strip() or "home",sort_order=int(request.form.get("sort_order","0") or 0),published=bool(request.form.get("published")))
+  if not x.slug or not x.title: flash("Slug and title are required.","error")
+  elif SiteSection.query.filter_by(slug=x.slug).first(): flash("Slug already exists.","error")
+  else: db.session.add(x);db.session.commit();flash("Section created.","success");return redirect(url_for("admin.sections"))
+ return render_template("admin/section_form.html",item=None)
+
+@admin_bp.route("/sections/<int:id>/edit",methods=["GET","POST"])
+@admin_required
+def section_edit(id):
+ x=db.session.get(SiteSection,id)
+ if not x:return "Section not found",404
+ if request.method=="POST":
+  x.slug=request.form.get("slug","").strip().lower();x.eyebrow=request.form.get("eyebrow","").strip();x.title=request.form.get("title","").strip();x.body=request.form.get("body","").strip();x.image_url=request.form.get("image_url","").strip();x.cta_label=request.form.get("cta_label","").strip();x.cta_url=request.form.get("cta_url","").strip();x.placement=request.form.get("placement","home").strip() or "home";x.sort_order=int(request.form.get("sort_order","0") or 0);x.published=bool(request.form.get("published"))
+  dup=SiteSection.query.filter(SiteSection.slug==x.slug,SiteSection.id!=id).first()
+  if not x.slug or not x.title: flash("Slug and title are required.","error")
+  elif dup: flash("Slug already exists.","error")
+  else: db.session.commit();flash("Section updated.","success");return redirect(url_for("admin.sections"))
+ return render_template("admin/section_form.html",item=x)
+
+@admin_bp.post("/sections/<int:id>/delete")
+@admin_required
+def section_delete(id):
+ x=db.session.get(SiteSection,id)
+ if x: db.session.delete(x);db.session.commit();flash("Section deleted.","success")
+ return redirect(url_for("admin.sections"))
