@@ -1,0 +1,7 @@
+[project]
+name = "gyanpath-ngo"
+version = "1.0.0"
+requires-python = ">=3.13,<3.14"
+
+[tool.vercel]
+entrypoint = "run:app"
