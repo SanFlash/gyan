@@ -298,6 +298,36 @@ def health():
     ), (200 if database == "ok" else 503)
 
 
+@public_bp.get("/api/debug")
+def debug():
+    """Deployment diagnostics for Vercel/Render. Does not expose secrets."""
+    import os
+    result = {
+        "vercel": bool(os.getenv("VERCEL") or os.getenv("VERCEL_ENV")),
+        "database_url_configured": bool(os.getenv("DATABASE_URL")),
+        "database": "ok",
+    }
+    try:
+        db.session.execute(text("SELECT 1"))
+    except Exception as exc:
+        db.session.rollback()
+        result["database"] = f"error: {type(exc).__name__}: {exc}"
+
+    try:
+        render_template(
+            "public/home.html",
+            projects=[],
+            events=[],
+            stats=[],
+            gallery=[],
+        )
+        result["home_template"] = "ok"
+    except Exception as exc:
+        result["home_template"] = f"error: {type(exc).__name__}: {exc}"
+
+    return jsonify(result)
+
+
 @public_bp.get("/api/projects")
 def api_projects():
     projects = Project.query.filter_by(published=True).all()
