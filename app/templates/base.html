@@ -1,97 +1,19 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#123c32">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#182B78">
 <meta name="description" content="{% block meta_description %}Gyan Path Shiksha Evam Samaj Kalyan Samiti (GSSKS), established in 1992 and recognised by the Government of Madhya Pradesh, Bhopal.{% endblock %}">
-<title>{% block title %}Gyan Path Shiksha Evam Samaj Kalyan Samiti | GSSKS{% endblock %}</title>
-<link rel="canonical" href="{{ request.base_url }}">
+<title>{% block title %}Gyan Path Shiksha Evam Samaj Kalyan Samiti | GSSKS{% endblock %}</title><link rel="canonical" href="{{ request.base_url }}">
 <script type="application/ld+json">{{ {"@context":"https://schema.org","@type":"NGO","name":"Gyan Path Shiksha Evam Samaj Kalyan Samiti","alternateName":"GSSKS","foundingDate":"1992","url":request.url_root,"email":"gyanpathngo.176@gmail.com","telephone":"0755-4278487","address":{"@type":"PostalAddress","streetAddress":"Sunder Nagar, Chhola Road, Behind Dussehra Maidan, Block Fanda","addressLocality":"Bhopal","addressRegion":"Madhya Pradesh","postalCode":"462001","addressCountry":"IN"} }|tojson }}</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ url_for('static',filename='css/site.css') }}">
-<link rel="stylesheet" href="{{ url_for('static',filename='css/premium.css') }}">
-<link rel="stylesheet" href="{{ url_for('static',filename='css/phase4-immersive.css') }}">
-<link rel="stylesheet" href="{{ url_for('static',filename='css/admin-fix.css') }}">
-<link rel="stylesheet" href="{{ url_for('static',filename='css/responsive-fix.css') }}?v=90e32e7f">
-<link rel="stylesheet" href="{{ url_for('static',filename='css/ui-polish.css') }}?v=bef98b8">
-<link rel="stylesheet" href="{{ url_for('static',filename='css/brand-loader.css') }}">
-<link rel="stylesheet" href="{{ url_for('static',filename='css/enhanced-visuals.css') }}?v=20260920">
-</head>
-<body>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static',filename='css/site.css') }}"><link rel="stylesheet" href="{{ url_for('static',filename='css/premium.css') }}"><link rel="stylesheet" href="{{ url_for('static',filename='css/phase4-immersive.css') }}"><link rel="stylesheet" href="{{ url_for('static',filename='css/admin-fix.css') }}"><link rel="stylesheet" href="{{ url_for('static',filename='css/responsive-fix.css') }}?v=20260920b"><link rel="stylesheet" href="{{ url_for('static',filename='css/ui-polish.css') }}"><link rel="stylesheet" href="{{ url_for('static',filename='css/brand-loader.css') }}"><link rel="stylesheet" href="{{ url_for('static',filename='css/enhanced-visuals.css') }}?v=20260920-client">
+</head><body>
 <div class="site-progress" aria-hidden="true"><span></span></div>
-<div id="brandLoader" class="brand-loader" role="status" aria-live="polite" aria-label="Loading Gyanpath">
-  <div class="loader-scene">
-    <div class="loader-logo-wrap"><img class="loader-logo" src="{{ url_for('static',filename='img/gyanpath-logo.svg') }}" alt="Gyanpath logo"></div>
-    <div class="loader-kicker"><span class="loader-name-desktop">Gyan Path</span><span class="loader-name-mobile">GSSKS</span> · Est. 1992</div>
-    <h1 class="loader-title">Shiksha Evam Samaj <span>Kalyan Samiti</span></h1>
-    <p class="loader-subtitle">Education · Awareness · Empowerment</p>
-    <div class="loader-progress" aria-hidden="true"><span></span></div>
-    <div class="loader-note">Preparing your experience</div>
-  </div>
-</div>
-<header class="nav">
-<a class="brand" href="{{ url_for('public.home') }}" aria-label="Gyanpath home">
-  <span class="brand-logo-box"><img src="{{ url_for('static',filename='img/gyanpath-logo.svg') }}" alt="" class="brand-logo"></span>
-  <span class="brand-wordmark"><strong class="brand-name-desktop">GYAN PATH</strong><strong class="brand-name-mobile">GSSKS</strong><small>SHIKSHA EVAM SAMAJ KALYAN SAMITI</small></span>
-</a>
-<button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
-<nav id="siteNav">
-<a href="{{ url_for('public.about') }}">About</a>
-<a href="{{ url_for('public.work') }}">Work</a>
-<a href="{{ url_for('public.projects') }}">Projects</a>
-<a href="{{ url_for('public.impact') }}">Impact</a>
-<a href="{{ url_for('public.gallery') }}">Gallery</a>
-<a href="{{ url_for('public.news_events') }}">News & Events</a>
-<a href="{{ url_for('public.get_involved') }}">Get Involved</a>
-<a href="{{ url_for('public.reports') }}">Documents</a>
-<a href="{{ url_for('public.contact') }}">Contact</a>
-{% if current_user.is_authenticated %}
-{% if current_user.role=='admin' %}<a class="nav-admin outline" href="{{ url_for('admin.dashboard') }}">Admin</a>{% else %}<a class="outline" href="{{ url_for('user.dashboard') }}">Account</a>{% endif %}
-<a class="outline" href="{{ url_for('auth.logout') }}">Logout</a>
-{% else %}<a class="outline" href="{{ url_for('auth.login') }}">Login</a>{% endif %}
-</nav>
-</header>
-{% with messages=get_flashed_messages(with_categories=true) %}{% if messages %}
-<div class="flash-wrap">{% for category,message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}</div>
-{% endif %}{% endwith %}
+<div id="brandLoader" class="brand-loader" role="status" aria-live="polite" aria-label="Loading GSSKS"><div class="loader-scene"><div class="loader-logo-wrap"><img class="loader-logo" src="{{ url_for('static',filename='img/gyanpath-logo.svg') }}" alt="GSSKS logo"></div><div class="loader-kicker"><span class="loader-name-desktop">Gyan Path</span><span class="loader-name-mobile">GSSKS</span> · Est. 1992</div><h1 class="loader-title">Shiksha Evam Samaj <span>Kalyan Samiti</span></h1><p class="loader-subtitle">Protection · Empowerment · Community</p><div class="loader-progress" aria-hidden="true"><span></span></div><div class="loader-note">Preparing your experience</div></div></div>
+<header class="nav"><a class="brand" href="{{ url_for('public.home') }}" aria-label="GSSKS home"><span class="brand-logo-box"><img src="{{ url_for('static',filename='img/gyanpath-logo.svg') }}" alt="" class="brand-logo"></span><span class="brand-wordmark"><strong class="brand-name-desktop">GYAN PATH</strong><strong class="brand-name-mobile">GSSKS</strong><small>SHIKSHA EVAM SAMAJ KALYAN SAMITI</small></span></a>
+<button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button><nav id="siteNav"><a href="{{ url_for('public.home') }}">Home</a><a href="{{ url_for('public.about') }}">About</a><a href="{{ url_for('public.icps') }}">ICPS</a><a href="{{ url_for('public.work') }}">Our Work</a><a href="{{ url_for('public.recognition') }}">Recognition</a><a href="{{ url_for('public.gallery') }}">Gallery</a><a href="{{ url_for('public.reports') }}">Documents</a><a href="{{ url_for('public.contact') }}">Contact</a><a class="nav-cta" href="{{ url_for('public.get_involved') }}">Get Involved</a>{% if current_user.is_authenticated %}{% if current_user.role=='admin' %}<a class="nav-admin outline" href="{{ url_for('admin.dashboard') }}">Admin</a>{% else %}<a class="outline" href="{{ url_for('user.dashboard') }}">Account</a>{% endif %}{% endif %}</nav></header>
+{% with messages=get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-wrap">{% for category,message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}{% endwith %}
 <main>{% block content %}{% endblock %}</main>
-<footer class="footer">
-  <div class="footer-brand">
-    <img src="{{ url_for('static',filename='img/gyanpath-logo.svg') }}" alt="Gyanpath logo">
-    <div>
-      <strong>Gyan Path Shiksha Evam Samaj Kalyan Samiti</strong>
-      <p>Education · Awareness · Empowerment</p>
-      <p>Sunder Nagar, Chhola Road, Behind Dussehra Maidan, Block Fanda, Bhopal, Madhya Pradesh – 462001</p>
-    </div>
-  </div>
-  <div class="footer-column">
-    <strong>Official contact</strong>
-    <p>Phone: <a href="tel:+917554278487">0755-4278487</a></p>
-    <p>Mobile: <a href="tel:+9188893937454">088893937454</a></p>
-    <p><a href="mailto:gyanpathngo.176@gmail.com">gyanpathngo.176@gmail.com</a></p>
-  </div>
-  <div class="footer-column">
-    <strong>Explore</strong>
-    <div class="footer-links">
-      <a href="{{ url_for('public.about') }}">About Us</a><a href="{{ url_for('public.work') }}">Our Work</a><a href="{{ url_for('public.projects') }}">Projects</a><a href="{{ url_for('public.impact') }}">Impact</a><a href="{{ url_for('public.gallery') }}">Gallery</a><a href="{{ url_for('public.news_events') }}">News & Events</a><a href="{{ url_for('public.reports') }}">Documents</a><a href="{{ url_for('public.contact') }}">Contact</a>
-    </div>
-  </div>
-  <div class="footer-column">
-    <strong>Get involved</strong>
-    <div class="footer-links">
-      <a href="{{ url_for('public.get_involved') }}">Partner / Collaborate</a><a href="{{ url_for('phase2.volunteer') }}">Volunteer</a><a href="{{ url_for('phase2.donate') }}">Support</a><a href="{{ url_for('auth.login') }}">Account</a>
-    </div>
-  </div>
-  <small>© 2026 GSSKS · Reg. No. 1262/92 · Recognised by M.P. Government · Established 1992. Public content is published only after organisational approval.</small>
-</footer>
-<script src="{{ url_for('static',filename='js/site.js') }}"></script>
-<script src="{{ url_for('static',filename='js/brand-loader.js') }}"></script>
-<script src="{{ url_for('static',filename='js/premium.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.min.js"></script>
-<script src="{{ url_for('static',filename='js/gyanpath-3d.js') }}"></script>
-<script src="{{ url_for('static',filename='js/enhanced-visuals.js') }}"></script>
-</body>
-</html>
+<footer class="footer"><div class="footer-brand"><img src="{{ url_for('static',filename='img/gyanpath-logo.svg') }}" alt="GSSKS logo"><div><strong>Gyan Path Shiksha Evam Samaj Kalyan Samiti</strong><p>Protection · Education · Awareness · Empowerment · Community</p><p>Sunder Nagar, Chhola Road, Behind Dussehra Maidan, Block Fanda, Bhopal, Madhya Pradesh – 462001</p></div></div><div class="footer-column"><strong>Official contact</strong><p>Phone: <a href="tel:+917554278487">0755-4278487</a></p><p>Mobile: <a href="tel:+9188893937454">088893937454</a></p><p><a href="mailto:gyanpathngo.176@gmail.com">gyanpathngo.176@gmail.com</a></p></div><div class="footer-column"><strong>Explore</strong><div class="footer-links"><a href="{{ url_for('public.about') }}">About</a><a href="{{ url_for('public.icps') }}">ICPS</a><a href="{{ url_for('public.work') }}">Our Work</a><a href="{{ url_for('public.recognition') }}">Recognition</a><a href="{{ url_for('public.gallery') }}">Gallery</a><a href="{{ url_for('public.reports') }}">Documents</a><a href="{{ url_for('public.contact') }}">Contact</a></div></div><small>© 2026 GSSKS · Reg. No. 1262/92 · Recognised by M.P. Government · Established 1992. Public content is published only after organisational approval.</small></footer>
+<script src="{{ url_for('static',filename='js/site.js') }}"></script><script src="{{ url_for('static',filename='js/brand-loader.js') }}"></script><script src="{{ url_for('static',filename='js/premium.js') }}"></script><script src="{{ url_for('static',filename='js/enhanced-visuals.js') }}"></script></body></html>
