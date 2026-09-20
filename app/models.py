@@ -35,3 +35,17 @@ class GalleryItem(T,db.Model):
     id=db.Column(db.Integer,primary_key=True); title=db.Column(db.String(200),nullable=False); category=db.Column(db.String(100),default="Other"); image_url=db.Column(db.String(700),default=""); location=db.Column(db.String(180),default=""); event_date=db.Column(db.Date,nullable=True); description=db.Column(db.Text,default=""); published=db.Column(db.Boolean,default=False); sort_order=db.Column(db.Integer,default=0)
 class SiteSetting(db.Model):
     id=db.Column(db.Integer,primary_key=True); key=db.Column(db.String(100),unique=True,nullable=False); value=db.Column(db.Text,default="")
+
+class SiteSection(T,db.Model):
+    id=db.Column(db.Integer,primary_key=True)
+    slug=db.Column(db.String(180),unique=True,nullable=False,index=True)
+    eyebrow=db.Column(db.String(120),default="")
+    title=db.Column(db.String(240),nullable=False)
+    body=db.Column(db.Text,default="")
+    image_url=db.Column(db.String(700),default="")
+    cta_label=db.Column(db.String(120),default="")
+    cta_url=db.Column(db.String(700),default="")
+    placement=db.Column(db.String(60),default="home")
+    sort_order=db.Column(db.Integer,default=0)
+    published=db.Column(db.Boolean,default=False)
+
