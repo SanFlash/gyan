@@ -30,3 +30,18 @@ body{background:var(--brand-off);color:var(--brand-text);font-family:"DM Sans",s
 .cms-section-media img{width:100%;height:100%;min-height:260px;object-fit:cover;display:block}
 @media(max-width:980px){.profile-facts{grid-template-columns:repeat(2,minmax(0,1fr))}.annual-grid{grid-template-columns:1fr}.cms-section-grid.has-image{grid-template-columns:1fr}}
 @media(max-width:640px){.profile-facts,.unit-grid{grid-template-columns:1fr}.annual-card{padding:21px}}
+
+/* Expanded, evidence-led programme content. Additive only; preserves GSSKS brand tokens. */
+.source-note{margin-top:20px;padding:14px 18px;border-left:3px solid var(--brand-red);background:#fff;color:var(--brand-muted);font-size:.9rem;line-height:1.65}
+.framework-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:28px 0}
+.framework-card,.capacity-card{background:#fff;border:1px solid #e2e6ef;border-radius:16px;padding:24px;box-shadow:0 10px 28px rgba(24,43,120,.045)}
+.framework-card small,.capacity-card small{color:var(--brand-red);font-weight:800;letter-spacing:.1em;font-size:.72rem}
+.framework-card h3,.capacity-card h3{color:var(--brand-blue);font-family:"DM Serif Display",serif;font-size:1.35rem;line-height:1.25;margin:12px 0}
+.framework-card p,.capacity-card p{color:var(--brand-muted);line-height:1.7}
+.capacity-comparison{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:28px 0}
+.capacity-card>strong{display:block;color:var(--brand-blue);font-family:"DM Serif Display",serif;font-size:3rem;line-height:1.1;margin:14px 0 4px}
+.notice{display:flex;flex-direction:column;gap:8px;margin:24px 0;padding:20px 22px;border:1px solid #ead9d9;border-left:4px solid var(--brand-red);border-radius:12px;background:#fff}
+.notice strong{color:var(--brand-blue)}
+.notice span{color:var(--brand-muted);line-height:1.7}
+@media(max-width:1050px){.framework-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.capacity-comparison{grid-template-columns:1fr}}
+@media(max-width:640px){.framework-grid{grid-template-columns:1fr}.framework-card,.capacity-card{padding:20px}}
