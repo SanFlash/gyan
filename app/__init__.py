@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, current_app
 from config import Config
 from .extensions import db, login_manager, migrate, csrf
 from .models import User
@@ -86,7 +86,7 @@ def ensure_demo():
         admin.set_password(admin_password)
         db.session.add(admin)
         db.session.commit()
-        app.logger.info("Configured admin account is available: %s", admin_email)
+        current_app.logger.info("Configured admin account is available: %s", admin_email)
 
     if os.getenv("AUTO_SEED_DEMO", "false").lower() != "true":
         return
@@ -96,7 +96,7 @@ def ensure_demo():
     demo_password = os.getenv("DEMO_ADMIN_PASSWORD", "")
     demo_email = os.getenv("DEMO_ADMIN_EMAIL", "admin.demo@gyanpath.local").strip().lower()
     if not demo_password:
-        app.logger.warning(
+        current_app.logger.warning(
             "AUTO_SEED_DEMO=true but DEMO_ADMIN_PASSWORD is empty; "
             "no demo admin was created."
         )
