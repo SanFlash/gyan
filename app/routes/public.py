@@ -18,6 +18,17 @@ from ..models import (
 public_bp = Blueprint("public", __name__)
 
 
+def _page_sections(placement):
+    """Return published CMS blocks for a page without breaking public rendering."""
+    try:
+        return SiteSection.query.filter_by(placement=placement, published=True).order_by(
+            SiteSection.sort_order, SiteSection.id
+        ).all()
+    except Exception:
+        db.session.rollback()
+        return []
+
+
 @public_bp.app_context_processor
 def settings():
     # The public site must remain renderable if PostgreSQL is briefly
@@ -89,7 +100,7 @@ def home():
 
 @public_bp.get("/about")
 def about():
-    return render_template("public/about.html")
+    return render_template("public/about.html", sections=_page_sections("about"))
 
 
 @public_bp.get("/mission")
@@ -114,17 +125,23 @@ def vision():
 
 @public_bp.get("/work")
 def work():
-    return render_template("public/work.html")
+    return render_template("public/work.html", sections=_page_sections("work"))
 
 
 @public_bp.get("/icps")
 def icps():
-    return render_template("public/icps.html")
+    return render_template("public/icps.html", sections=_page_sections("icps"))
+
+
+@public_bp.get("/open-shelter-home")
+def open_shelter_home():
+    return render_template("public/open_shelter_home.html",
+                           sections=_page_sections("shelter_home"))
 
 
 @public_bp.get("/recognition")
 def recognition():
-    return render_template("public/recognition.html")
+    return render_template("public/recognition.html", sections=_page_sections("recognition"))
 
 
 @public_bp.get("/education")
@@ -184,7 +201,7 @@ def projects():
         .order_by(Project.created_at.desc())
         .all()
     )
-    return render_template("public/projects.html", projects=projects)
+    return render_template("public/projects.html", projects=projects, sections=_page_sections("projects"))
 
 
 
@@ -250,7 +267,7 @@ def impact():
         .order_by(ImpactStatistic.sort_order)
         .all()
     )
-    return render_template("public/impact.html", stats=stats)
+    return render_template("public/impact.html", stats=stats, sections=_page_sections("impact"))
 
 
 @public_bp.get("/reports")
@@ -369,6 +386,7 @@ def sitemap():
         url_for("public.home", _external=True),
         url_for("public.about", _external=True),
         url_for("public.icps", _external=True),
+        url_for("public.open_shelter_home", _external=True),
         url_for("public.work", _external=True),
         url_for("public.recognition", _external=True),
         url_for("public.projects", _external=True),
