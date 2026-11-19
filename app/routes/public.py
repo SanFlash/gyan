@@ -307,6 +307,143 @@ def contact():
     return render_template("public/contact.html")
 
 
+@public_bp.get("/api/chat")
+def ngo_chat():
+    """Answer common GSSKS questions from verified public website information."""
+    import re
+
+    question = (request.args.get("q") or "").strip()
+    if not question:
+        return jsonify(error="Please enter a question."), 400
+    if len(question) > 500:
+        return jsonify(error="Please keep your question under 500 characters."), 400
+
+    normal = re.sub(r"[^a-z0-9\s]", " ", question.lower())
+    normal = re.sub(r"\s+", " ", normal).strip()
+    words = set(normal.split())
+
+    entries = [
+        {
+            "keys": ["hello", "hi", "hey", "namaste", "good morning", "good evening"],
+            "terms": {"hello", "hi", "hey", "namaste", "morning", "evening"},
+            "answer": "Hello! Welcome to Gyan Path Shiksha Evam Samaj Kalyan Samiti (GSSKS). I can help with information about our organisation, Open Shelter Homes, child protection services, locations, and ways to connect with us.",
+            "suggestions": ["About GSSKS", "Open Shelter Home", "Contact details"]
+        },
+        {
+            "keys": ["about", "organisation", "organization", "ngo", "gyan path", "gssks"],
+            "terms": {"about", "organisation", "organization", "ngo", "gssks", "gyan", "path", "samiti"},
+            "answer": "Gyan Path Shiksha Evam Samaj Kalyan Samiti (GSSKS) is a non-governmental organisation based in Bhopal, Madhya Pradesh. Established in 1992 and registered under No. 1262/92, GSSKS works in child protection, education, health, rehabilitation and community support, with particular attention to communities affected by the Bhopal Gas Tragedy.",
+            "suggestions": ["Our work", "Open Shelter Home", "Contact details"]
+        },
+        {
+            "keys": ["established", "founded", "started", "registration", "registered", "year"],
+            "terms": {"established", "founded", "started", "registration", "registered", "year", "number", "1262"},
+            "answer": "GSSKS was established in 1992. Its society registration number is 1262/92, dated 4 September 1992, under the Madhya Pradesh Society Registration Act, 1973.",
+            "suggestions": ["About GSSKS", "Contact details"]
+        },
+        {
+            "keys": ["founder", "director", "who leads", "leadership"],
+            "terms": {"founder", "director", "leads", "leadership", "ishwar", "chauhan"},
+            "answer": "The organisation's founder is Ishwar Singh Chouhan, also referred to as I. S. Chauhan.",
+            "suggestions": ["About GSSKS", "Contact details"]
+        },
+        {
+            "keys": ["mission", "vision", "aim", "objective", "purpose"],
+            "terms": {"mission", "vision", "aim", "objective", "purpose", "goal"},
+            "answer": "GSSKS's work focuses on care, protection and opportunities for children in need, strengthening child-protection systems, and supporting families and communities affected by the Bhopal Gas Tragedy.",
+            "suggestions": ["Our work", "Child protection services"]
+        },
+        {
+            "keys": ["open shelter", "shelter home", "boys home", "shelter"],
+            "terms": {"open", "shelter", "home", "homes", "boys", "centre", "centres", "center", "centers"},
+            "answer": "GSSKS's Open Shelter Home programme provides day-long care and support for children in need of care and protection. The programme combines safe care, meals, education, health support, counselling, recreation, life skills and family reintegration. Four units are listed in Bhopal. Read more at /open-shelter-home.",
+            "suggestions": ["Age group", "Shelter locations", "Facilities and services"]
+        },
+        {
+            "keys": ["age", "ages", "children age", "how old"],
+            "terms": {"age", "ages", "old", "children", "child", "6", "17"},
+            "answer": "The Open Shelter Home programme information describes support for children and adolescents aged 6 to 17 years.",
+            "suggestions": ["Open Shelter Home", "Facilities and services"]
+        },
+        {
+            "keys": ["service", "services", "facilities", "provide", "support", "what do you do"],
+            "terms": {"service", "services", "facilities", "provide", "support", "care", "education", "health", "food", "counselling", "counseling"},
+            "answer": "The Open Shelter Home programme includes safe accommodation and daily care, nutritious meals and essentials, school and bridge-learning support, computer learning, medical check-ups and immunisation, counselling and life skills, sports and cultural activities, vocational exposure for adolescents, family counselling and restoration follow-up.",
+            "suggestions": ["Education support", "Health and counselling", "Vocational training"]
+        },
+        {
+            "keys": ["education", "school", "study", "computer classes", "learning"],
+            "terms": {"education", "school", "study", "computer", "classes", "learning", "literacy", "tuition"},
+            "answer": "Education support includes school admission assistance, basic literacy, bridge education, remedial learning, study support, textbooks and stationery, and computer or digital learning.",
+            "suggestions": ["Open Shelter Home", "Other services"]
+        },
+        {
+            "keys": ["health", "medical", "doctor", "medicine", "vaccination", "immunisation", "immunization"],
+            "terms": {"health", "medical", "doctor", "medicine", "vaccination", "immunisation", "immunization", "first", "aid"},
+            "answer": "Health and wellbeing support described by GSSKS includes routine medical check-ups, immunisation, first-aid support, nutrition, physical fitness and sports.",
+            "suggestions": ["Open Shelter Home", "Other services"]
+        },
+        {
+            "keys": ["counselling", "counseling", "mental", "emotional", "trauma", "psychologist"],
+            "terms": {"counselling", "counseling", "mental", "emotional", "trauma", "psychologist", "stress"},
+            "answer": "The programme includes individual and group counselling, emotional support, trauma care, behaviour management, life-skills learning and stress-management support.",
+            "suggestions": ["Open Shelter Home", "Health and wellbeing"]
+        },
+        {
+            "keys": ["location", "address", "where", "centres", "centers", "branches"],
+            "terms": {"location", "address", "where", "centres", "centers", "branches", "bhopal", "chhola", "pushpa", "nagar"},
+            "answer": "Four Open Shelter Home locations are listed in Bhopal: Unit 1 — H.No. 1740, Block A, Ground Floor, Sundar Nagar, Chhola Road; Unit 2 — H.No. C-537, 538, Pushpa Nagar, Railway Station Road; Unit 3 — H.No. 1741, Sundar Nagar, Chhola Road; Unit 4 — H.No. 1740, Block B, First Floor, Sundar Nagar, Chhola Road. Please contact GSSKS before visiting to confirm current centre operations and visiting arrangements.",
+            "suggestions": ["Contact details", "Open Shelter Home"]
+        },
+        {
+            "keys": ["contact", "phone", "mobile", "email", "call", "whatsapp"],
+            "terms": {"contact", "phone", "mobile", "email", "call", "whatsapp", "reach", "number"},
+            "answer": "You can contact GSSKS at 0755-4278487 or by email at gyanpathngo.176@gmail.com. The website also lists mobile numbers 088893937454 and 09826366176. Visit the Contact page for the address, map and enquiry form.",
+            "suggestions": ["Contact page", "Organisation address"]
+        },
+        {
+            "keys": ["volunteer", "volunteering", "join", "help", "contribute", "donate", "donation"],
+            "terms": {"volunteer", "volunteering", "join", "help", "contribute", "donate", "donation", "support"},
+            "answer": "Thank you for your interest in supporting GSSKS. Please use the Get Involved or Contact page to reach the organisation and discuss volunteering, contributions or other ways to help. The team can confirm current opportunities and the appropriate process.",
+            "suggestions": ["Get Involved", "Contact details"]
+        },
+        {
+            "keys": ["icps", "mission vatsalya", "juvenile justice", "child protection", "cwc", "jjb"],
+            "terms": {"icps", "mission", "vatsalya", "juvenile", "justice", "child", "protection", "cwc", "jjb", "act"},
+            "answer": "GSSKS's Open Shelter Home work is described within the Integrated Child Protection Scheme (ICPS), now under Mission Vatsalya, and the Juvenile Justice (Care and Protection of Children) Act, 2015, with Central Rules, 2016. The programme includes coordination with Child Welfare Committees (CWC) and Juvenile Justice Boards (JJB).",
+            "suggestions": ["ICPS programme", "Open Shelter Home"]
+        },
+        {
+            "keys": ["gandhi shilp bazaar", "artisan", "artisans", "handicraft"],
+            "terms": {"gandhi", "shilp", "bazaar", "artisan", "artisans", "handicraft", "craft"},
+            "answer": "GSSKS also highlights Gandhi Shilp Bazaar 2024, a seven-day artisan exhibition held at Urban Haat, Gauhar Mahal, Bhopal, from 11 to 17 September 2024. The initiative reported participation by 50 artisans and sales of more than ₹14.95 lakh.",
+            "suggestions": ["Our projects", "Contact details"]
+        },
+        {
+            "keys": ["timing", "opening hours", "visiting hours", "when can i visit", "office hours"],
+            "terms": {"timing", "timings", "opening", "hours", "visiting", "visit", "office"},
+            "answer": "Current public visiting hours are not listed on the website. Please call GSSKS at 0755-4278487 before visiting to confirm availability and arrangements.",
+            "suggestions": ["Contact details", "Shelter locations"]
+        },
+    ]
+
+    best = None
+    best_score = 0
+    for entry in entries:
+        score = sum(2 for phrase in entry["keys"] if phrase in normal)
+        score += sum(1 for term in entry["terms"] if term in words)
+        if score > best_score:
+            best, best_score = entry, score
+
+    if best and best_score >= 2:
+        return jsonify(answer=best["answer"], suggestions=best["suggestions"])
+
+    return jsonify(
+        answer="I can help with GSSKS information about the organisation, Open Shelter Homes, child protection, education, health services, centre locations, contact details and ways to get involved. I may not have the answer to that specific question yet. Please contact the GSSKS team at 0755-4278487 or gyanpathngo.176@gmail.com for confirmation.",
+        suggestions=["About GSSKS", "Open Shelter Home", "Contact details", "Get Involved"]
+    )
+
+
 @public_bp.get("/api/health")
 def health():
     database = "ok"
