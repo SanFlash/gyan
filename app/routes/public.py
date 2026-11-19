@@ -331,7 +331,7 @@ def ngo_chat():
         "padhai": "education", "school": "education", "swasthya": "health",
         "ilaaj": "medical", "dawai": "medicine", "daan": "donation",
         "shuru": "started", "sanstha": "organisation", "sangathan": "organisation",
-        "kaam": "work", "seva": "services", "suv idha": "facilities",
+        "kaam": "work", "seva": "services", "suvidha": "facilities",
         "karyakram": "programme", "yojana": "scheme", "umar": "age",
         "kitni": "how", "kitne": "how", "kaise": "how",
     }
