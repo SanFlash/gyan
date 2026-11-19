@@ -139,11 +139,6 @@ def open_shelter_home():
                            sections=_page_sections("shelter_home"))
 
 
-@public_bp.get("/recognition")
-def recognition():
-    return render_template("public/recognition.html", sections=_page_sections("recognition"))
-
-
 @public_bp.get("/education")
 def education():
     return render_template(
@@ -388,7 +383,6 @@ def sitemap():
         url_for("public.icps", _external=True),
         url_for("public.open_shelter_home", _external=True),
         url_for("public.work", _external=True),
-        url_for("public.recognition", _external=True),
         url_for("public.projects", _external=True),
         url_for("public.impact", _external=True),
         url_for("public.gallery", _external=True),
