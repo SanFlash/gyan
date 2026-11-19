@@ -321,6 +321,21 @@ def ngo_chat():
     normal = re.sub(r"[^a-z0-9\s]", " ", question.lower())
     normal = re.sub(r"\s+", " ", normal).strip()
     words = set(normal.split())
+    # Common Hindi/Hinglish words mapped to the same intent vocabulary.
+    hinglish_aliases = {
+        "kaun": "founder", "kaunse": "which", "kab": "year",
+        "kahan": "location", "kidhar": "location", "pata": "address",
+        "sampark": "contact", "baat": "contact", "phone": "phone",
+        "madad": "support", "sahayata": "support", "help": "support",
+        "bachche": "children", "bache": "children", "bacchon": "children",
+        "padhai": "education", "school": "education", "swasthya": "health",
+        "ilaaj": "medical", "dawai": "medicine", "daan": "donation",
+        "shuru": "started", "sanstha": "organisation", "sangathan": "organisation",
+        "kaam": "work", "seva": "services", "suv idha": "facilities",
+        "karyakram": "programme", "yojana": "scheme", "umar": "age",
+        "kitni": "how", "kitne": "how", "kaise": "how",
+    }
+    words.update(hinglish_aliases[token] for token in list(words) if token in hinglish_aliases)
 
     entries = [
         {
