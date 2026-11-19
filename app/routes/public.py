@@ -436,11 +436,42 @@ def ngo_chat():
             best, best_score = entry, score
 
     if best and best_score >= 2:
-        return jsonify(answer=best["answer"], suggestions=best["suggestions"])
+        related_links = [
+            {"label": "About GSSKS", "url": "/about"},
+            {"label": "Open Shelter Home", "url": "/open-shelter-home"},
+            {"label": "Contact GSSKS", "url": "/contact"},
+        ]
+        if any(term in words for term in {"icps", "vatsalya", "juvenile", "cwc", "jjb"}):
+            related_links = [
+                {"label": "ICPS programme", "url": "/icps"},
+                {"label": "Open Shelter Home", "url": "/open-shelter-home"},
+                {"label": "Contact GSSKS", "url": "/contact"},
+            ]
+        elif any(term in words for term in {"volunteer", "volunteering", "donate", "donation", "contribute", "join"}):
+            related_links = [
+                {"label": "Get involved", "url": "/get-involved"},
+                {"label": "Contact GSSKS", "url": "/contact"},
+            ]
+        elif any(term in words for term in {"project", "projects", "artisan", "artisans", "bazaar", "gandhi", "shilp"}):
+            related_links = [
+                {"label": "Our projects", "url": "/projects"},
+                {"label": "Gandhi Shilp Bazaar", "url": "/projects/gandhi-shilp-bazaar-2024"},
+                {"label": "Contact GSSKS", "url": "/contact"},
+            ]
+        elif any(term in words for term in {"address", "location", "where", "bhopal", "chhola", "pushpa", "nagar"}):
+            related_links = [
+                {"label": "Shelter locations", "url": "/open-shelter-home"},
+                {"label": "Contact & map", "url": "/contact"},
+            ]
+        return jsonify(answer=best["answer"], suggestions=best["suggestions"], links=related_links)
 
     return jsonify(
         answer="I can help with GSSKS information about the organisation, Open Shelter Homes, child protection, education, health services, centre locations, contact details and ways to get involved. I may not have the answer to that specific question yet. Please contact the GSSKS team at 0755-4278487 or gyanpathngo.176@gmail.com for confirmation.",
-        suggestions=["About GSSKS", "Open Shelter Home", "Contact details", "Get Involved"]
+        suggestions=["About GSSKS", "Open Shelter Home", "Contact details", "Get Involved"],
+        links=[
+            {"label": "About GSSKS", "url": "/about"},
+            {"label": "Contact GSSKS", "url": "/contact"},
+        ]
     )
 
 
