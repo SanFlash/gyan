@@ -8,10 +8,11 @@
   const messages = document.getElementById("gssksChatMessages");
   const suggestions = document.getElementById("gssksChatSuggestions");
   const quickMenu = document.getElementById("gssksChatTopics");
+  const topicsToggle = document.getElementById("gssksChatTopicsToggle");
   if (!launcher || !panel || !form || !input || !messages || !suggestions) return;
 
   let busy = false;
-  const welcome = "Namaste! Welcome to GSSKS. I'm here to help you learn about our organisation, child-protection work, Open Shelter Homes, services and how to connect with our team.";
+  const welcome = "Namaste! I’m the GSSKS assistant. Ask me about our work, shelter homes, services or how to contact us.";
   const quickQuestions = ["About GSSKS", "Open Shelter Home", "Services for children", "Contact details"];
   const topicQuestions = [
     ["🏛️", "Organisation", "Tell me about GSSKS"],
@@ -79,7 +80,7 @@
 
   function renderSuggestions(items) {
     suggestions.replaceChildren();
-    (items || []).slice(0, 5).forEach((item) => {
+    (items || []).slice(0, 3).forEach((item) => {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "gssks-chat-chip";
@@ -126,6 +127,7 @@
     pendingBubble.innerHTML = '<span class="gssks-chat-typing" aria-hidden="true"><i></i><i></i><i></i></span>';
     renderSuggestions([]);
     if (quickMenu) quickMenu.hidden = true;
+    if (topicsToggle) { topicsToggle.hidden = true; topicsToggle.setAttribute("aria-expanded", "false"); }
 
     try {
       const response = await fetch("/api/chat?q=" + encodeURIComponent(question), {
@@ -158,7 +160,8 @@
     messages.replaceChildren();
     addMessage(welcome, "bot");
     renderSuggestions(quickQuestions);
-    if (quickMenu) quickMenu.hidden = false;
+    if (quickMenu) quickMenu.hidden = true;
+    if (topicsToggle) { topicsToggle.hidden = false; topicsToggle.setAttribute("aria-expanded", "false"); }
     renderTopics();
     input.focus();
   }
@@ -166,6 +169,12 @@
   launcher.addEventListener("click", () => setOpen(panel.hidden));
   closeButton?.addEventListener("click", () => setOpen(false));
   clearButton?.addEventListener("click", resetChat);
+  topicsToggle?.addEventListener("click", () => {
+    if (!quickMenu) return;
+    const expanded = topicsToggle.getAttribute("aria-expanded") === "true";
+    quickMenu.hidden = expanded;
+    topicsToggle.setAttribute("aria-expanded", expanded ? "false" : "true");
+  });
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     ask(input.value);
@@ -178,6 +187,8 @@
   });
 
   addMessage(welcome, "bot");
-  renderSuggestions(quickQuestions);
+  renderSuggestions(quickQuestions.slice(0, 3));
   renderTopics();
+  if (quickMenu) quickMenu.hidden = true;
+  if (topicsToggle) topicsToggle.setAttribute("aria-expanded", "false");
 })();
