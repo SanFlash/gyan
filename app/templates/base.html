@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ url_for('static',filename='css/site.css') }}"><link rel="stylesheet" href="{{ url_for('static',filename='css/premium.css') }}"><link rel="stylesheet" href="{{ url_for('static',filename='css/phase4-immersive.css') }}"><link rel="stylesheet" href="{{ url_for('static',filename='css/admin-fix.css') }}"><link rel="stylesheet" href="{{ url_for('static',filename='css/responsive-fix.css') }}?v=20260920b"><link rel="stylesheet" href="{{ url_for('static',filename='css/ui-polish.css') }}"><link rel="stylesheet" href="{{ url_for('static',filename='css/brand-loader.css') }}"><link rel="stylesheet" href="{{ url_for('static',filename='css/enhanced-visuals.css') }}?v=20261119-units-fix">
-<link rel="stylesheet" href="{{ url_for('static',filename='css/gssks-chat.css') }}?v=20261120-enhanced"></head><body>
+<link rel="stylesheet" href="{{ url_for('static',filename='css/gssks-chat.css') }}?v=20261120-compact"></head><body>
 <div class="site-progress" aria-hidden="true"><span></span></div>
 <div id="brandLoader" class="brand-loader" role="status" aria-live="polite" aria-label="Loading GSSKS"><div class="loader-scene"><div class="loader-logo-wrap"><img class="loader-logo" src="{{ url_for('static',filename='img/gyanpath-logo.svg') }}" alt="GSSKS logo"></div><div class="loader-kicker"><span class="loader-name-desktop">Gyan Path</span><span class="loader-name-mobile">GSSKS</span> · Est. 1992</div><h1 class="loader-title">Shiksha Evam Samaj <span>Kalyan Samiti</span></h1><p class="loader-subtitle">Protection · Empowerment · Community</p><div class="loader-progress" aria-hidden="true"><span></span></div><div class="loader-note">Preparing your experience</div></div></div>
 <header class="nav"><a class="brand" href="{{ url_for('public.home') }}" aria-label="GSSKS home"><span class="brand-logo-box"><img src="{{ url_for('static',filename='img/gyanpath-logo.svg') }}" alt="" class="brand-logo"></span><span class="brand-wordmark"><strong class="brand-name-desktop">GYAN PATH</strong><strong class="brand-name-mobile">GSSKS</strong><small>SHIKSHA EVAM SAMAJ KALYAN SAMITI</small></span></a>
@@ -28,7 +28,8 @@
     <button class="gssks-chat-clear" id="gssksChatClear" type="button" aria-label="Start a new conversation" title="New conversation">↻</button>
     <button class="gssks-chat-close" id="gssksChatClose" type="button" aria-label="Close assistant">×</button>
   </header>
-  <div class="gssks-chat-topics" id="gssksChatTopics" aria-label="Browse topics"></div>
+  <button class="gssks-chat-topics-toggle" id="gssksChatTopicsToggle" type="button" aria-controls="gssksChatTopics" aria-expanded="false"><span aria-hidden="true">☷</span> Explore topics <span class="gssks-chat-toggle-chevron" aria-hidden="true">⌄</span></button>
+  <div class="gssks-chat-topics" id="gssksChatTopics" aria-label="Browse topics" hidden></div>
   <div class="gssks-chat-messages" id="gssksChatMessages" role="log" aria-live="polite" aria-relevant="additions"></div>
   <div class="gssks-chat-suggestions" id="gssksChatSuggestions" aria-label="Suggested questions"></div>
   <form class="gssks-chat-form" id="gssksChatForm">
@@ -37,4 +38,4 @@
   </form>
   <div class="gssks-chat-footnote">For official confirmation, please contact the GSSKS team.</div>
 </section>
-<script src="{{ url_for('static',filename='js/site.js') }}"></script><script src="{{ url_for('static',filename='js/brand-loader.js') }}"></script><script src="{{ url_for('static',filename='js/premium.js') }}"></script><script src="{{ url_for('static',filename='js/enhanced-visuals.js') }}"></script><script src="{{ url_for('static',filename='js/gssks-chat.js') }}?v=20261120-enhanced"></script></body></html>
+<script src="{{ url_for('static',filename='js/site.js') }}"></script><script src="{{ url_for('static',filename='js/brand-loader.js') }}"></script><script src="{{ url_for('static',filename='js/premium.js') }}"></script><script src="{{ url_for('static',filename='js/enhanced-visuals.js') }}"></script><script src="{{ url_for('static',filename='js/gssks-chat.js') }}?v=20261120-compact"></script></body></html>
