@@ -127,7 +127,7 @@
     pendingBubble.innerHTML = '<span class="gssks-chat-typing" aria-hidden="true"><i></i><i></i><i></i></span>';
     renderSuggestions([]);
     if (quickMenu) quickMenu.hidden = true;
-    if (topicsToggle) { topicsToggle.hidden = true; topicsToggle.setAttribute("aria-expanded", "false"); }
+    if (topicsToggle) topicsToggle.setAttribute("aria-expanded", "false");
 
     try {
       const response = await fetch("/api/chat?q=" + encodeURIComponent(question), {
@@ -161,7 +161,7 @@
     addMessage(welcome, "bot");
     renderSuggestions(quickQuestions);
     if (quickMenu) quickMenu.hidden = true;
-    if (topicsToggle) { topicsToggle.hidden = false; topicsToggle.setAttribute("aria-expanded", "false"); }
+    if (topicsToggle) topicsToggle.setAttribute("aria-expanded", "false");
     renderTopics();
     input.focus();
   }
