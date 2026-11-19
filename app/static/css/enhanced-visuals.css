@@ -45,3 +45,102 @@ body{background:var(--brand-off);color:var(--brand-text);font-family:"DM Sans",s
 .notice span{color:var(--brand-muted);line-height:1.7}
 @media(max-width:1050px){.framework-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.capacity-comparison{grid-template-columns:1fr}}
 @media(max-width:640px){.framework-grid{grid-template-columns:1fr}.framework-card,.capacity-card{padding:20px}}
+
+
+/* Open Shelter Home address cards: clear hierarchy, readable unit badges and accessible actions */
+.unit-grid{align-items:stretch;gap:20px}
+.unit-grid .unit-card{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:12px;
+  min-height:100%;
+  padding:clamp(22px,2.5vw,30px);
+  border:1px solid #dfe4ef;
+  border-radius:18px;
+  background:#fff;
+  box-shadow:0 12px 32px rgba(24,43,120,.055);
+  transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;
+}
+.unit-grid .unit-card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(181,46,53,.45);
+  box-shadow:0 17px 38px rgba(24,43,120,.1);
+}
+.unit-card-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  width:100%;
+  margin-bottom:2px;
+}
+.unit-grid .unit-card .unit-label{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:auto;
+  height:auto;
+  min-width:0;
+  padding:7px 12px;
+  border:1px solid #dce4f5;
+  border-radius:999px;
+  background:#eef2fa;
+  color:#182B78;
+  font-size:.72rem;
+  font-weight:800;
+  line-height:1.2;
+  letter-spacing:.07em;
+  white-space:nowrap;
+}
+.unit-area{
+  color:#687286;
+  font-size:.75rem;
+  font-weight:700;
+  letter-spacing:.045em;
+  text-align:right;
+}
+.unit-grid .unit-card h3{
+  margin:0;
+  color:#182B78;
+  font-family:"DM Sans",sans-serif;
+  font-size:clamp(1.02rem,1.5vw,1.16rem);
+  font-weight:800;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+.unit-grid .unit-card p{
+  margin:0;
+  color:#505866;
+  font-size:.94rem;
+  line-height:1.65;
+}
+.unit-directions{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  min-height:40px;
+  margin-top:auto;
+  padding:8px 0 0;
+  color:#B52E35;
+  font-size:.86rem;
+  font-weight:800;
+  text-decoration:none;
+  text-underline-offset:4px;
+}
+.unit-directions:hover{text-decoration:underline;color:#8f2028}
+.unit-directions:focus-visible{
+  outline:3px solid rgba(24,43,120,.35);
+  outline-offset:4px;
+  border-radius:4px;
+}
+@media(max-width:760px){
+  .unit-grid{grid-template-columns:1fr;gap:14px}
+  .unit-grid .unit-card{padding:21px;border-radius:16px;gap:10px}
+  .unit-grid .unit-card h3{font-size:1.02rem}
+  .unit-grid .unit-card p{font-size:.92rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .unit-grid .unit-card{transition:none}
+  .unit-grid .unit-card:hover{transform:none}
+}
