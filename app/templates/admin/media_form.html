@@ -1,0 +1,17 @@
+{% extends "admin/base.html" %}
+{% block title %}Upload media | Admin{% endblock %}
+{% block admin_content %}
+<div class="admin-head"><div><span class="eyebrow">Media centre</span><h1>Upload photo or video</h1><p class="section-lead">Add a title, choose a file and decide whether it should appear in the public gallery.</p></div><a class="btn btn-outline" href="{{ url_for('admin.media_library') }}">Back to library</a></div>
+<form class="form card" method="post" enctype="multipart/form-data">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<label>Media title<input name="title" maxlength="200" required placeholder="e.g. Community awareness programme"></label>
+<label>Category<select name="category"><option>Programme</option><option>Events</option><option>Child Protection</option><option>Education</option><option>Health</option><option>Community Activities</option><option>Training</option><option>Exhibitions</option><option>Other</option></select></label>
+<label>Choose photo or video<input type="file" name="media_file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif,video/mp4,video/webm,video/quicktime,video/x-m4v" required></label>
+<p class="muted">Supported: JPG, PNG, WebP, GIF, AVIF, MP4, WebM and MOV. Maximum upload size is controlled by the server configuration (default 250 MB).</p>
+<label>Description<textarea name="description" rows="4" maxlength="3000" placeholder="Add context for visitors and screen-reader users"></textarea></label>
+<label>Display order<input type="number" name="sort_order" value="0"></label>
+<label class="check"><input type="checkbox" name="published"> Publish in public gallery</label>
+<p class="muted">Please confirm consent and organisational approval before publishing photographs or videos, especially where children are identifiable.</p>
+<button class="btn btn-primary" type="submit">Upload to media library</button>
+</form>
+{% endblock %}
