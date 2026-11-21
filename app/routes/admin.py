@@ -1,9 +1,9 @@
 from functools import wraps
-from flask import Blueprint,render_template,request,redirect,url_for,flash
+from flask import Blueprint,render_template,request,redirect,url_for,flash,current_app
 import os
 from flask_login import login_required,current_user
 from ..extensions import db
-from ..models import User,Project,ProjectBrief,Event,ContactMessage,VolunteerApplication,Donation,Artisan,BlogPost,ImpactStatistic,Document,GalleryItem,SiteSetting,SiteSection
+from ..models import User,Project,ProjectBrief,Event,ContactMessage,VolunteerApplication,Donation,Artisan,BlogPost,ImpactStatistic,Document,GalleryItem,SiteSetting,SiteSection,MediaAsset
 admin_bp=Blueprint("admin",__name__,url_prefix="/admin")
 def _media_url(field_name, folder):
  f=request.files.get(field_name)
@@ -284,3 +284,153 @@ def section_delete(id):
  x=db.session.get(SiteSection,id)
  if x: db.session.delete(x);db.session.commit();flash("Section deleted.","success")
  return redirect(url_for("admin.sections"))
+
+
+# ---------------------------------------------------------------------------
+# Media library: media binaries live in Cloudinary; SQL stores searchable
+# metadata only. Local disk is supported for development, never as a
+# production fallback on ephemeral hosting.
+# ---------------------------------------------------------------------------
+@admin_bp.get("/media")
+@admin_required
+def media_library():
+    items = MediaAsset.query.order_by(MediaAsset.sort_order, MediaAsset.created_at.desc()).all()
+    return render_template("admin/media.html", items=items)
+
+
+@admin_bp.route("/media/new", methods=["GET", "POST"])
+@admin_required
+def media_new():
+    if request.method == "POST":
+        upload = request.files.get("media_file")
+        title = request.form.get("title", "").strip()
+        if not title or not upload or not upload.filename:
+            flash("Add a title and choose a photo or video to upload.", "error")
+            return redirect(url_for("admin.media_new"))
+
+        import mimetypes
+        import uuid
+        from werkzeug.utils import secure_filename
+
+        mime = (upload.mimetype or mimetypes.guess_type(upload.filename)[0] or "").lower()
+        media_type = "video" if mime.startswith("video/") else "image" if mime.startswith("image/") else ""
+        allowed = {"image/jpeg", "image/png", "image/webp", "image/gif", "image/avif",
+                   "video/mp4", "video/webm", "video/quicktime", "video/x-m4v"}
+        if not media_type or mime not in allowed:
+            flash("Supported formats: JPG, PNG, WebP, GIF, AVIF, MP4, WebM and MOV.", "error")
+            return redirect(url_for("admin.media_new"))
+
+        upload.seek(0, os.SEEK_END)
+        size = upload.tell()
+        upload.seek(0)
+        max_bytes = int(current_app.config.get("MAX_CONTENT_LENGTH", 250 * 1024 * 1024))
+        if size > max_bytes:
+            flash("This file is larger than the configured upload limit.", "error")
+            return redirect(url_for("admin.media_new"))
+
+        file_url = ""
+        storage_provider = ""
+        storage_key = ""
+        width = height = None
+        duration = None
+        try:
+            cloud_name = os.getenv("CLOUDINARY_CLOUD_NAME", "")
+            api_key = os.getenv("CLOUDINARY_API_KEY", "")
+            api_secret = os.getenv("CLOUDINARY_API_SECRET", "")
+            if cloud_name and api_key and api_secret:
+                import cloudinary
+                import cloudinary.uploader
+                cloudinary.config(cloud_name=cloud_name, api_key=api_key, api_secret=api_secret, secure=True)
+                folder = "gyanpath/media/" + ("videos" if media_type == "video" else "photos")
+                if media_type == "video":
+                    result = cloudinary.uploader.upload_large(
+                        upload, folder=folder, resource_type="video",
+                        chunk_size=6_000_000, use_filename=True, unique_filename=True,
+                    )
+                else:
+                    result = cloudinary.uploader.upload(
+                        upload, folder=folder, resource_type="image",
+                        use_filename=True, unique_filename=True,
+                    )
+                file_url = result.get("secure_url", "")
+                storage_key = result.get("public_id", "")
+                width = result.get("width")
+                height = result.get("height")
+                duration = result.get("duration")
+                storage_provider = "cloudinary"
+            elif not current_app.config.get("IS_VERCEL") and os.getenv("RENDER") is None and os.getenv("FLASK_ENV") == "development":
+                media_dir = os.path.join(current_app.instance_path, "media")
+                os.makedirs(media_dir, exist_ok=True)
+                safe_name = secure_filename(upload.filename) or "upload"
+                filename = uuid.uuid4().hex + "-" + safe_name
+                upload.save(os.path.join(media_dir, filename))
+                file_url = url_for("public.local_media", filename=filename)
+                storage_key = filename
+                storage_provider = "local"
+            else:
+                flash("Cloud media storage is not configured. Add CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET in the hosting environment before uploading.", "error")
+                return redirect(url_for("admin.media_new"))
+        except Exception:
+            current_app.logger.exception("GSSKS media upload failed")
+            flash("The media upload failed. Check storage configuration and try again.", "error")
+            return redirect(url_for("admin.media_new"))
+
+        if not file_url:
+            flash("The storage provider did not return a media URL. Nothing was saved.", "error")
+            return redirect(url_for("admin.media_new"))
+
+        item = MediaAsset(
+            title=title,
+            description=request.form.get("description", "").strip(),
+            category=request.form.get("category", "Programme").strip() or "Programme",
+            media_type=media_type,
+            mime_type=mime,
+            file_url=file_url,
+            storage_provider=storage_provider,
+            storage_key=storage_key,
+            file_size=size,
+            width=width,
+            height=height,
+            duration_seconds=duration,
+            published=bool(request.form.get("published")),
+            sort_order=int(request.form.get("sort_order", "0") or 0),
+        )
+        db.session.add(item)
+        db.session.commit()
+        flash("Media uploaded and saved to the library.", "success")
+        return redirect(url_for("admin.media_library"))
+    return render_template("admin/media_form.html")
+
+
+@admin_bp.post("/media/<int:id>/delete")
+@admin_required
+def media_delete(id):
+    item = db.session.get(MediaAsset, id)
+    if item:
+        try:
+            if item.storage_provider == "cloudinary" and item.storage_key:
+                import cloudinary
+                import cloudinary.uploader
+                cloudinary.config(
+                    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME", ""),
+                    api_key=os.getenv("CLOUDINARY_API_KEY", ""),
+                    api_secret=os.getenv("CLOUDINARY_API_SECRET", ""),
+                    secure=True,
+                )
+                cloudinary.uploader.destroy(
+                    item.storage_key,
+                    resource_type="video" if item.media_type == "video" else "image",
+                    invalidate=True,
+                )
+            elif item.storage_provider == "local" and item.storage_key:
+                local_path = os.path.join(current_app.instance_path, "media", os.path.basename(item.storage_key))
+                if os.path.isfile(local_path):
+                    os.remove(local_path)
+            db.session.delete(item)
+            db.session.commit()
+            flash("Media item deleted.", "success")
+        except Exception:
+            db.session.rollback()
+            current_app.logger.exception("GSSKS media delete failed")
+            flash("Could not delete the media item. Check storage permissions and try again.", "error")
+    return redirect(url_for("admin.media_library"))
