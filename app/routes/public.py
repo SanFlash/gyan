@@ -13,6 +13,7 @@ from ..models import (
     Document,
     GalleryItem,
     SiteSection,
+    MediaAsset,
 )
 
 public_bp = Blueprint("public", __name__)
