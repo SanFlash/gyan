@@ -12,6 +12,7 @@
   if (!launcher || !panel || !form || !input || !messages || !suggestions) return;
 
   let busy = false;
+  let lastFocusedElement = null;
   const welcome = "Namaste! I’m the GSSKS assistant. Ask me about our work, shelter homes, services or how to contact us.";
   const quickQuestions = ["About GSSKS", "Open Shelter Home", "Services for children", "Contact details"];
   const topicQuestions = [
@@ -24,11 +25,39 @@
   ];
 
   function setOpen(open) {
+    if (open && panel.hidden) lastFocusedElement = document.activeElement;
     panel.hidden = !open;
     launcher.setAttribute("aria-expanded", open ? "true" : "false");
     launcher.classList.toggle("is-open", open);
-    if (open) window.setTimeout(() => input.focus(), 80);
-    else launcher.focus();
+    if (open) {
+      window.setTimeout(() => input.focus(), 50);
+    } else {
+      const target = lastFocusedElement && typeof lastFocusedElement.focus === "function"
+        ? lastFocusedElement : launcher;
+      target.focus();
+      lastFocusedElement = null;
+    }
+  }
+
+  function trapPanelFocus(event) {
+    if (event.key !== "Tab" || panel.hidden) return;
+    const focusable = Array.from(panel.querySelectorAll(
+      'button:not([disabled]), input:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+    )).filter((element) => element.getClientRects().length > 0 && element.getAttribute("aria-hidden") !== "true");
+    if (!focusable.length) {
+      event.preventDefault();
+      panel.focus();
+      return;
+    }
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && (document.activeElement === first || !panel.contains(document.activeElement))) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && (document.activeElement === last || !panel.contains(document.activeElement))) {
+      event.preventDefault();
+      first.focus();
+    }
   }
 
   function scrollMessages() { messages.scrollTop = messages.scrollHeight; }
@@ -182,6 +211,7 @@
   input.addEventListener("keydown", (event) => {
     if (event.key === "Escape") setOpen(false);
   });
+  panel.addEventListener("keydown", trapPanelFocus);
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && !panel.hidden) setOpen(false);
   });
