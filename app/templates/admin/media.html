@@ -1,0 +1,17 @@
+{% extends "admin/base.html" %}
+{% block title %}Media Library | Admin{% endblock %}
+{% block admin_content %}
+<div class="admin-head"><div><span class="eyebrow">Media centre</span><h1>Media Library</h1><p class="section-lead">Manage approved photographs and videos in one place.</p></div><a class="btn btn-primary" href="{{ url_for('admin.media_new') }}">Upload media</a></div>
+<div class="card" style="padding:18px;margin-bottom:20px"><strong>Storage overview</strong><p class="muted">Media files are stored outside the database. The database keeps their details, publication status and storage references. Publish only material approved by GSSKS.</p></div>
+<div class="admin-table">
+{% for x in items %}
+<div class="admin-row">
+  <div class="admin-media-row">
+    {% if x.media_type == 'video' %}<video src="{{ x.file_url }}" muted preload="metadata" style="width:112px;height:76px;object-fit:cover;border-radius:10px"></video>{% else %}<img src="{{ x.file_url }}" alt="" loading="lazy">{% endif %}
+    <div><strong>{{ x.title }}</strong><small>{{ x.media_type|title }} · {{ x.category }} · {{ (x.file_size / 1048576)|round(2) }} MB · {{ 'Published' if x.published else 'Draft' }}</small><small>{{ x.width or '—' }} × {{ x.height or '—' }} · {{ x.storage_provider|title }}</small></div>
+  </div>
+  <div class="row-actions"><a href="{{ x.file_url }}" target="_blank" rel="noopener noreferrer">Preview</a><form method="post" action="{{ url_for('admin.media_delete', id=x.id) }}" onsubmit="return confirm('Permanently delete this media file?')"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="link-button">Delete</button></form></div>
+</div>
+{% else %}<div class="empty">No media uploaded yet. Add approved photographs and videos to build the library.</div>{% endfor %}
+</div>
+{% endblock %}
