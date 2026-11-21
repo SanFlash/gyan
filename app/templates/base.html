@@ -21,10 +21,10 @@
   <img src="{{ url_for('static',filename='img/gyanpath-logo.svg') }}" alt="">
   <span class="gssks-chat-pulse" aria-hidden="true"></span>
 </button>
-<section class="gssks-chat-panel" id="gssksChatPanel" role="dialog" aria-label="GSSKS assistant" aria-modal="false" hidden>
+<section class="gssks-chat-panel" id="gssksChatPanel" role="dialog" aria-labelledby="gssksChatTitle" aria-modal="false" hidden>
   <header class="gssks-chat-header">
     <span class="gssks-chat-brand"><img src="{{ url_for('static',filename='img/gyanpath-logo.svg') }}" alt=""></span>
-    <span class="gssks-chat-heading"><strong>GSSKS Assistant</strong><span>Online · NGO information desk</span></span>
+    <span class="gssks-chat-heading"><strong id="gssksChatTitle">GSSKS Assistant</strong><span><i class="gssks-chat-status" aria-hidden="true"></i> NGO information desk</span></span>
     <button class="gssks-chat-clear" id="gssksChatClear" type="button" aria-label="Start a new conversation" title="New conversation">↻</button>
     <button class="gssks-chat-close" id="gssksChatClose" type="button" aria-label="Close assistant">×</button>
   </header>
@@ -33,7 +33,7 @@
   <div class="gssks-chat-messages" id="gssksChatMessages" role="log" aria-live="polite" aria-relevant="additions"></div>
   <div class="gssks-chat-suggestions" id="gssksChatSuggestions" aria-label="Suggested questions"></div>
   <form class="gssks-chat-form" id="gssksChatForm">
-    <input id="gssksChatInput" type="text" maxlength="500" autocomplete="off" placeholder="Ask a question…" aria-label="Type your question" required>
+    <input id="gssksChatInput" type="text" maxlength="500" autocomplete="off" enterkeyhint="send" placeholder="Ask a question…" aria-label="Type your question" required>
     <button type="submit" aria-label="Send question">➤</button>
   </form>
   <div class="gssks-chat-footnote">For official confirmation, please contact the GSSKS team.</div>
