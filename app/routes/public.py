@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, send_from_directory, current_app
 from sqlalchemy import text
 from email_validator import validate_email, EmailNotValidError
 
@@ -208,7 +208,22 @@ def gallery():
         .order_by(GalleryItem.sort_order, GalleryItem.event_date.desc().nullslast())
         .all()
     )
-    return render_template("public/gallery.html", items=items)
+    media = MediaAsset.query.filter_by(published=True).order_by(
+        MediaAsset.sort_order, MediaAsset.created_at.desc()
+    ).all()
+    return render_template("public/gallery.html", items=items, media=media)
+
+
+@public_bp.get("/local-media/<path:filename>")
+def local_media(filename):
+    """Serve local-only development uploads; production media uses Cloudinary."""
+    import os
+    from werkzeug.utils import safe_join
+    media_dir = os.path.join(current_app.instance_path, "media")
+    target = safe_join(media_dir, filename)
+    if not target or not os.path.isfile(target):
+        return "", 404
+    return send_from_directory(media_dir, filename, conditional=True)
 
 
 @public_bp.get("/news-events")
