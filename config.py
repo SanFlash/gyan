@@ -30,6 +30,7 @@ class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-only-change-me")
     SQLALCHEMY_DATABASE_URI = database_uri
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    MAX_CONTENT_LENGTH = int(os.getenv('MAX_CONTENT_LENGTH', str(250 * 1024 * 1024)))
     WTF_CSRF_ENABLED = True
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = "Lax"
