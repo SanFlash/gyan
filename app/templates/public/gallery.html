@@ -1,3 +1,14 @@
 {% extends "base.html" %}{% block title %}Gallery | GSSKS{% endblock %}{% block content %}
-<section class="page-hero immersive-page"><div class="container"><span class="eyebrow">Gallery</span><h1>Photographs of programmes and community activities.</h1><p>Only photographs approved and published by GSSKS appear here. Each image can carry its event, location, date and description.</p></div></section>
-<section class="section"><div class="container"><div class="gallery-grid">{% for x in items %}<figure class="gallery-card"><img src="{{x.image_url}}" alt="{{x.title}}{% if x.location %} — {{x.location}}{% endif %}" loading="lazy"><figcaption><span class="pill">{{x.category}}</span><h3>{{x.title}}</h3>{% if x.event_date or x.location %}<small>{% if x.event_date %}{{x.event_date.strftime('%d %b %Y')}}{% endif %}{% if x.event_date and x.location %} · {% endif %}{{x.location}}</small>{% endif %}{% if x.description %}<p>{{x.description}}</p>{% endif %}</figcaption></figure>{% else %}<div class="empty"><div><strong>No photographs published yet.</strong><span>GSSKS can add approved programme photographs from the Admin panel. Nothing is displayed until an administrator publishes it.</span></div></div>{% endfor %}</div></div></section>{% endblock %}
+<section class="page-hero immersive-page"><div class="container"><span class="eyebrow">Gallery</span><h1>Photographs and videos from our programmes and community activities.</h1><p>Explore moments from GSSKS initiatives. Only approved media is published here.</p></div></section>
+<section class="section"><div class="container"><div class="gallery-grid">
+{% for x in media %}
+<figure class="gallery-card media-library-card">
+{% if x.media_type == 'video' %}<video controls playsinline preload="metadata" aria-label="{{ x.title }} video" style="width:100%;aspect-ratio:16/10;object-fit:cover;background:#111;border-radius:12px"><source src="{{ x.file_url }}" type="{{ x.mime_type or 'video/mp4' }}">Your browser does not support this video.</video>
+{% else %}<img src="{{ x.file_url }}" alt="{{ x.title }}{% if x.description %} — {{ x.description }}{% endif %}" loading="lazy">{% endif %}
+<figcaption><span class="pill">{{ x.category }}</span><h3>{{ x.title }}</h3>{% if x.description %}<p>{{ x.description }}</p>{% endif %}</figcaption></figure>
+{% endfor %}
+{% for x in items %}
+<figure class="gallery-card"><img src="{{x.image_url}}" alt="{{x.title}}{% if x.location %} — {{x.location}}{% endif %}" loading="lazy"><figcaption><span class="pill">{{x.category}}</span><h3>{{x.title}}</h3>{% if x.event_date or x.location %}<small>{% if x.event_date %}{{x.event_date.strftime('%d %b %Y')}}{% endif %}{% if x.event_date and x.location %} · {% endif %}{{x.location}}</small>{% endif %}{% if x.description %}<p>{{x.description}}</p>{% endif %}</figcaption></figure>
+{% endfor %}
+{% if not media and not items %}<div class="empty"><div><strong>No media published yet.</strong><span>GSSKS can add approved photographs and videos from the Admin panel. Nothing is displayed until an administrator publishes it.</span></div></div>{% endif %}
+</div></div></section>{% endblock %}
