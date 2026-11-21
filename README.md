@@ -79,3 +79,36 @@ The current support form safely records support requests. Razorpay can be enable
 ## Security
 
 Never deploy the demo password. Use a strong `SECRET_KEY`, HTTPS, managed PostgreSQL, backups, rate limiting and production email/payment credentials.
+
+
+## Media library (photos and videos)
+
+The admin workspace includes a dedicated **Media Library** at `/admin/media`. It stores media metadata in the configured SQL database and stores original files in a media object store.
+
+### Recommended production storage: Cloudinary Free
+
+1. Create a free Cloudinary account at https://cloudinary.com/users/register/free.
+2. In the Cloudinary Console, copy the cloud name, API key and API secret.
+3. Add these as environment variables to the Render service (do not commit secrets to GitHub):
+
+```
+CLOUDINARY_CLOUD_NAME=<your-cloud-name>
+CLOUDINARY_API_KEY=<your-api-key>
+CLOUDINARY_API_SECRET=<your-api-secret>
+MAX_CONTENT_LENGTH=262144000
+```
+
+4. Redeploy the Render service.
+5. Sign in to the GSSKS admin workspace, open **Media Library**, upload a photo or video, add its title and description, and publish it when approved.
+
+Images and videos are uploaded to separate `gyanpath/media/photos` and `gyanpath/media/videos` folders. Videos use chunked uploads. The database stores the asset URL, type, MIME type, dimensions, duration, byte size, provider and publication state. The public Gallery page displays only published media. Existing Gallery photographs and Documents remain supported.
+
+Cloudinary's free tier has a monthly credit allowance shared across storage, transformations and delivery bandwidth; it is not unlimited storage. Monitor usage in the Cloudinary Console and upgrade or move to another object-storage provider if usage grows.
+
+### Local development
+
+When Cloudinary credentials are absent outside production, media files can be stored under the Flask instance media directory and served by the local development route. This local filesystem is for development only. Render free services have ephemeral filesystems, so production uploads are deliberately blocked until Cloudinary credentials are configured. Never rely on local uploads for production persistence.
+
+### Media publishing and privacy
+
+Only publish media approved by GSSKS. Obtain appropriate consent before publishing identifiable people, especially children. Draft items are excluded from the public gallery.
