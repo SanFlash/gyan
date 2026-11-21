@@ -358,7 +358,7 @@ def media_new():
                 height = result.get("height")
                 duration = result.get("duration")
                 storage_provider = "cloudinary"
-            elif not current_app.config.get("IS_VERCEL") and os.getenv("RENDER") is None and os.getenv("FLASK_ENV") == "development":
+            elif not current_app.config.get("IS_VERCEL") and os.getenv("RENDER") is None and os.getenv("FLASK_ENV", "development") != "production":
                 media_dir = os.path.join(current_app.instance_path, "media")
                 os.makedirs(media_dir, exist_ok=True)
                 safe_name = secure_filename(upload.filename) or "upload"
