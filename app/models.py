@@ -49,3 +49,22 @@ class SiteSection(T,db.Model):
     sort_order=db.Column(db.Integer,default=0)
     published=db.Column(db.Boolean,default=False)
 
+
+
+class MediaAsset(T, db.Model):
+    """Metadata for media stored outside the relational database."""
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.Text, default="")
+    category = db.Column(db.String(100), default="Programme")
+    media_type = db.Column(db.String(20), nullable=False, default="image")
+    mime_type = db.Column(db.String(120), default="")
+    file_url = db.Column(db.String(1200), nullable=False)
+    storage_provider = db.Column(db.String(30), default="cloudinary")
+    storage_key = db.Column(db.String(500), default="")
+    file_size = db.Column(db.BigInteger, default=0)
+    width = db.Column(db.Integer)
+    height = db.Column(db.Integer)
+    duration_seconds = db.Column(db.Float)
+    published = db.Column(db.Boolean, default=False, nullable=False)
+    sort_order = db.Column(db.Integer, default=0)
