@@ -110,7 +110,7 @@ def mission():
         "public/standard.html",
         eyebrow="Mission",
         title="Mission statement",
-        body="The official mission statement will be published after GSSKS provides and approves it.",
+        body="""GSSKS works to provide care, protection and meaningful opportunities for children in need of care and protection. Its programme approach brings together safe shelter, nutrition, education, health support, counselling, recreation, vocational exposure and family reintegration. The work also recognises the wider circumstances affecting families in Bhopal’s gas-affected communities and the importance of connecting children with appropriate care and protection systems.\n\nThe organisation’s practical focus is to help children access safety, dignity, learning and support while strengthening the relationships and systems that contribute to their wellbeing.""",
     )
 
 
@@ -120,7 +120,7 @@ def vision():
         "public/standard.html",
         eyebrow="Vision",
         title="Vision statement",
-        body="The official vision statement will be published after GSSKS provides and approves it.",
+        body="""A future in which children can grow up with safety, dignity, opportunity and the support they need to realise their potential. GSSKS’s work is directed towards stronger child-protection systems, supportive communities and access to care, learning and rehabilitation for children facing vulnerable circumstances.\n\nThis long-term direction is reflected in the organisation’s focus on child-first care, equality, inclusion, compassion, integrity and partnership.""",
     )
 
 
@@ -146,7 +146,7 @@ def education():
         "public/standard.html",
         eyebrow="Education",
         title="Education",
-        body="Verified education programme information will be published after GSSKS provides and approves it.",
+        body="""Education is integrated into GSSKS’s Open Shelter Home programme as a practical pathway to stability, confidence and future opportunity. Support described across the programme includes assistance with government-school admission, basic literacy, bridge education, remedial learning, tuition and study support, textbooks and stationery, annual examinations, and computer or digital learning.\n\nLearning support is complemented by educational visits and activities that allow children to explore local heritage, participate in group experiences and connect classroom learning with the world around them. The programme also includes age-appropriate vocational exposure and basic computer training for adolescents.""",
     )
 
 
@@ -156,7 +156,7 @@ def women():
         "public/standard.html",
         eyebrow="Women Empowerment",
         title="Women Empowerment",
-        body="Verified programme information will be published after GSSKS provides and approves it.",
+        body="""GSSKS’s child-centred approach recognises that children’s wellbeing is closely connected with the stability and support available to their families. The organisation’s programme information describes family counselling, restoration efforts, follow-up after restoration and community outreach as part of its wider care and protection work.\n\nThese activities are intended to strengthen supportive relationships around children and help connect families with appropriate guidance and child-protection processes. GSSKS also works within the broader framework of the Department of Women and Child Development and child-protection institutions. The focus of this page is family and community support; no separate women-only training or beneficiary programme is represented here.""",
     )
 
 
@@ -166,7 +166,7 @@ def skills():
         "public/standard.html",
         eyebrow="Skill Development",
         title="Skill Development",
-        body="Training details will be updated by the organization.",
+        body="""Skill development is part of the Open Shelter Home programme’s preparation for children’s future independence. Programme activities include computer learning and, particularly for adolescents aged 14–17, exposure to crafts or trade skills, career guidance and pre-employment training. The 2024–25 activity record also includes employment-oriented training for children.\n\nThe approach combines practical learning with life-skills development, value education, communication, confidence-building and guidance. These experiences are intended to help young people recognise their interests and prepare for further education, training and livelihood pathways. Specific course titles and certification claims are not stated.""",
     )
 
 
@@ -176,7 +176,7 @@ def livelihood():
         "public/standard.html",
         eyebrow="Livelihood Development",
         title="Livelihood Development",
-        body="Verified livelihood programme information will be published after GSSKS provides and approves it.",
+        body="""GSSKS’s documented livelihood-related initiative includes the Gandhi Shilp Bazaar exhibition held at Urban Haat, Gauhar Mahal, Bhopal, from 11 to 17 September 2024. The seven-day programme brought 50 artisans before the public and showcased traditional products and craft practices. Reported sales during the exhibition exceeded ₹14,95,577.\n\nThe initiative created a platform for artisans to display their work, interact with visitors and generate sales. It demonstrates GSSKS’s engagement with artisan visibility and market access alongside its core child-protection and social-development work.""",
     )
 
 
@@ -186,7 +186,7 @@ def handicrafts():
         "public/standard.html",
         eyebrow="Handicrafts & Handlooms",
         title="Handicrafts & Handlooms",
-        body="Verified craft and artisan programme information will be published after GSSKS provides and approves it.",
+        body="""GSSKS’s artisan and craft initiative is represented by the Gandhi Shilp Bazaar 2024 exhibition, held from 11 to 17 September at Urban Haat, Gauhar Mahal, Bhopal, under the MSS of the Ministry of Textiles, Government of India. The seven-day exhibition included 50 artisans and attracted members of the general public.\n\nThe displayed range included jute products, Assam bamboo products, dry-stone work, handmade bedsheets, Madhubani paintings, silk sarees, jute and POP pottery, patchwork, zari work, paintings and woollen or fibre-yarn crafts. Reported sales exceeded ₹14,95,577. The programme provided artisans with a public exhibition setting to present their products and connect with potential buyers.""",
     )
 
 
