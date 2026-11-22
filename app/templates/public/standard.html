@@ -1,1 +1,7 @@
-{% extends "base.html" %}{% block title %}{{ eyebrow }} | GSSKS{% endblock %}{% block content %}<section class="page-hero"><div class="container"><span class="eyebrow">{{eyebrow}}</span><h1>{{title}}</h1><p>{{body}}</p></div></section><section class="section"><div class="container"><div class="notice"><strong>Official content pending.</strong><span>This page is ready for GSSKS to publish its verified {{eyebrow|lower}} information from the Admin/content workflow. No unverified organisational statement is being presented.</span></div></div></section>{% endblock %}
+{% extends "base.html" %}
+{% block title %}{{ eyebrow }} | GSSKS{% endblock %}
+{% block meta_description %}{{ title }} — Gyan Path Shiksha Evam Samaj Kalyan Samiti, Bhopal.{% endblock %}
+{% block content %}
+<section class="page-hero brand-page"><div class="container"><span class="eyebrow">{{ eyebrow }}</span><h1>{{ title }}</h1><p class="section-lead">{{ (body or "").split("\\n\\n")[0] }}</p></div></section>
+<section class="section"><div class="container"><article class="card programme-copy">{% for paragraph in (body or "").split("\\n\\n") %}{% if paragraph.strip() %}<p>{{ paragraph }}</p>{% endif %}{% endfor %}</article></div></section>
+{% endblock %}
