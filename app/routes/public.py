@@ -257,7 +257,7 @@ def project_detail(slug):
 
 @public_bp.get("/events")
 def events():
-    events = Event.query.order_by(Event.event_date.asc().nullslast()).all()
+    events = Event.query.order_by(Event.event_date.desc().nullslast()).all()
     return render_template("public/events.html", events=events)
 
 
