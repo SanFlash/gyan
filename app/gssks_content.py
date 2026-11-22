@@ -146,6 +146,48 @@ Programme focus: practical skills, vocational exposure, career awareness and pre
 
 Reporting period: 2024–25. Specific training dates and course titles are not stated in the programme record.""",
     },
+    {
+        "title": "Open Shelter Home Programme Highlights – 2022–23",
+        "event_date": None,
+        "location": "GSSKS Open Shelter Home units, Bhopal, Madhya Pradesh",
+        "description": """The 2022–23 programme year brought together daily care, health support, learning and recreation for children attending GSSKS Open Shelter Home services.
+
+Daily support included three meals, routine medical check-ups, first-aid availability, vaccination support, clothing and essential learning materials. Children took part in indoor and outdoor games, cultural activities and group recreation. Computer-based learning was also provided to strengthen digital familiarity and basic learning skills.
+
+The programme included interaction and visits by child-welfare and government representatives, alongside the distribution of uniforms and books. These activities connected everyday care with educational participation, health and institutional engagement.
+
+Programme areas: nutrition and daily care; health and first aid; vaccination; education and computer learning; clothing and stationery; recreation; and child-welfare coordination.
+
+Reporting period: 2022–23.""",
+    },
+    {
+        "title": "Open Shelter Home Programme Highlights – 2023–24",
+        "event_date": None,
+        "location": "GSSKS Open Shelter Home units, Bhopal, Madhya Pradesh",
+        "description": """During 2023–24, GSSKS combined daily shelter-home care with educational exposure, national and cultural observances, health support and opportunities for children to participate in the community.
+
+Activities included morning prayer, three healthy meals, routine medical check-ups, first aid, computer learning and annual examinations. Children participated in World Environment Day tree-planting activities, an educational visit to Rani Kamalapati Palace, Independence Day and Gandhi Jayanti observances, Children's Day activities and a Christmas outing to People's Mall. The programme also included an interaction with Child Welfare Committee representatives and a legal-awareness interaction during a visit by a District Legal Services Authority officer.
+
+The year’s activities connected classroom learning with local heritage, civic awareness, environmental responsibility and positive group experiences.
+
+Programme areas: daily care; education; health; environmental awareness; heritage exposure; national-day activities; child-rights awareness; recreation; and institutional coordination.
+
+Reporting period: 2023–24.""",
+    },
+    {
+        "title": "Open Shelter Home Programme Highlights – 2024–25",
+        "event_date": None,
+        "location": "GSSKS Open Shelter Home units, Bhopal, Madhya Pradesh",
+        "description": """The 2024–25 programme year continued the combination of daily care, education, health, recreation and practical skill development across GSSKS Open Shelter Home activities.
+
+Children received daily meals and routine medical check-ups and participated in computer classes, annual examinations and employment-oriented training. Creative activities included painting and rangoli. The programme also included International Yoga Day participation, Diwali celebrations, cleanliness activities, plantation, recreational outings and group activities. Visits and interactions included engagement with Special Juvenile Police Unit inspectors and a discussion with a clinical psychologist during a centre visit.
+
+The activities supported physical wellbeing, creativity, practical learning, confidence and positive engagement with support professionals.
+
+Programme areas: nutrition; health; digital learning; examinations; vocational exposure; creative activities; yoga and fitness; cleanliness; plantation; recreation; and professional interaction.
+
+Reporting period: 2024–25.""",
+    },
 ]
 
 
