@@ -1,6 +1,6 @@
 from flask import Blueprint, abort, render_template
-from .extensions import db
-from .models import Event
+from ..extensions import db
+from ..models import Event
 
 events_bp = Blueprint("events_detail", __name__)
 
