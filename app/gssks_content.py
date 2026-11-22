@@ -2,7 +2,7 @@
 from datetime import date
 
 from .extensions import db
-from .models import Event
+from .models import Event, Project, ProjectBrief
 
 
 EVENTS = [
@@ -208,5 +208,40 @@ def seed_gssks_events():
         ))
         created += 1
     if created:
+        db.session.commit()
+
+    # A complete project page for the verified 2024 artisan exhibition.
+    project = Project.query.filter_by(slug="gandhi-shilp-bazaar-2024").first()
+    if project is None:
+        project = Project(
+            title="Gandhi Shilp Bazaar 2024",
+            slug="gandhi-shilp-bazaar-2024",
+            category="Artisan & Livelihood Development",
+            location="Urban Haat, Gauhar Mahal, Bhopal, Madhya Pradesh",
+            status="Completed",
+            short_description="A seven-day artisan exhibition connecting traditional crafts with public visibility and market access.",
+            description="""Gyan Path Shiksha Evam Samaj Kalyan Samiti conducted Gandhi Shilp Bazaar from 11 to 17 September 2024 at Urban Haat, Gauhar Mahal, Bhopal, under the MSS of the Ministry of Textiles, Government of India.
+
+The seven-day exhibition brought together 50 artisans and welcomed members of the general public. It presented a diverse range of handmade and traditional products, including jute products, Assam bamboo products, dry-stone work, handmade bedsheets, Madhubani paintings, silk sarees, jute and POP pottery, patchwork, zari work, paintings and woollen or fibre-yarn crafts.
+
+The exhibition provided artisans with a shared platform to display their products, interact with visitors and generate sales. Reported sales during the programme exceeded ₹14,95,577.""",
+            published=True,
+            featured=False,
+        )
+        db.session.add(project)
+        db.session.flush()
+
+    brief = ProjectBrief.query.filter_by(project_id=project.id).first()
+    if brief is None:
+        brief = ProjectBrief(
+            project_id=project.id,
+            duration="11–17 September 2024 (seven days)",
+            objective="Provide a public exhibition platform for artisans to showcase traditional products, engage with visitors and generate sales.",
+            beneficiaries="50 participating artisans.",
+            activities="Seven-day public exhibition at Urban Haat, Gauhar Mahal, Bhopal; display of jute, Assam bamboo, dry-stone, textile, painting, pottery, patchwork, zari and woollen/fibre-yarn crafts.",
+            outcomes="Reported sales exceeded ₹14,95,577 during the seven-day programme. The exhibition increased public visibility for the participating artisans and their craft products.",
+            partners="Conducted under the MSS of the Ministry of Textiles, Government of India.",
+        )
+        db.session.add(brief)
         db.session.commit()
     return created
