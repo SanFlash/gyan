@@ -16,7 +16,7 @@ The interaction formed part of GSSKS's wider effort to connect children in the O
 
 Programme focus: child-rights awareness, legal literacy, institutional interaction and protection-oriented guidance.
 
-The activity is recorded for 16 May 2023 in the programme activity record.""",
+The interaction took place on 16 May 2023.""",
     },
     {
         "title": "World Environment Day – Learning Through Nature",
@@ -112,7 +112,7 @@ Programme focus: physical wellbeing, healthy habits, participation and recreatio
 
 Programme focus: cultural participation, belonging, recreation and shared celebration.
 
-Reporting period: 2024–25. The programme record does not specify the exact date of the centre celebration.""",
+Programme period: 2024–25. The specific date of the centre celebration is not listed.""",
     },
     {
         "title": "Cleanliness and Safe-Surroundings Drive",
@@ -122,7 +122,7 @@ Reporting period: 2024–25. The programme record does not specify the exact dat
 
 Programme focus: hygiene awareness, responsibility, teamwork and care for shared surroundings.
 
-Reporting period: 2024–25. The programme record does not specify an individual event date.""",
+Programme period: 2024–25. An individual event date is not listed.""",
     },
     {
         "title": "Creative Learning and Rangoli Activities",
@@ -144,7 +144,7 @@ The intention is to help young people build practical capabilities and become be
 
 Programme focus: practical skills, vocational exposure, career awareness and preparation for future opportunities.
 
-Reporting period: 2024–25. Specific training dates and course titles are not stated in the programme record.""",
+Programme period: 2024–25. Specific training dates and course titles are not listed.""",
     },
     {
         "title": "Open Shelter Home Programme Highlights – 2022–23",
