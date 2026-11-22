@@ -70,7 +70,7 @@ def home():
             .all()
         )
         events = (
-            Event.query.order_by(Event.event_date.asc().nullslast())
+            Event.query.order_by(Event.event_date.desc().nullslast())
             .limit(3)
             .all()
         )
@@ -83,10 +83,10 @@ def home():
 
     if not stats:
         stats = [
-            {"value": "410", "label": "Artisans listed in an MSME SFURTI cluster record"},
-            {"value": "Rs. 233.92L", "label": "GOI grant / NA share in that record"},
-            {"value": "Rs. 20.16L", "label": "IA / SPV share in that record"},
-            {"value": "2023–24", "label": "Government handicrafts marketing calendar reference"},
+            {"value": "1992", "label": "Year GSSKS was established"},
+            {"value": "4", "label": "Open Shelter Home units listed in Bhopal"},
+            {"value": "50", "label": "Artisans at Gandhi Shilp Bazaar 2024"},
+            {"value": "₹14.95L+", "label": "Reported sales at Gandhi Shilp Bazaar 2024"},
         ]
 
     return render_template(
