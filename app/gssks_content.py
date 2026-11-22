@@ -1,0 +1,170 @@
+"""Idempotent, evidence-led programme and event content for the GSSKS public site."""
+from datetime import date
+
+from .extensions import db
+from .models import Event
+
+
+EVENTS = [
+    {
+        "title": "Child Rights and Legal Awareness Interaction",
+        "event_date": date(2023, 5, 16),
+        "location": "GSSKS Open Shelter Home, Bhopal, Madhya Pradesh",
+        "description": """A child-rights and legal-awareness interaction was recorded during an inspection visit by an officer associated with the District Legal Services Authority. The session created an opportunity to discuss children's rights, protection, access to support and the role of the child-protection system.
+
+The interaction formed part of GSSKS's wider effort to connect children in the Open Shelter Home with information, guidance and appropriate institutional support. It also reflected the importance of coordination between care settings and statutory child-protection stakeholders.
+
+Programme focus: child-rights awareness, legal literacy, institutional interaction and protection-oriented guidance.
+
+The activity is recorded for 16 May 2023 in the programme activity record.""",
+    },
+    {
+        "title": "World Environment Day – Learning Through Nature",
+        "event_date": date(2023, 6, 5),
+        "location": "GSSKS Open Shelter Home, Bhopal, Madhya Pradesh",
+        "description": """Children marked World Environment Day through a nature-focused learning activity that included planting trees and discussing the importance of the environment. The activity encouraged children to connect environmental awareness with everyday responsibility and care for shared spaces.
+
+The programme used participation and practical learning to introduce environmental stewardship in an accessible way. Children were encouraged to observe nature, understand why green spaces matter and take part in a collective activity.
+
+Programme focus: environmental awareness, tree planting, participation and learning through action.
+
+The activity is recorded for 5 June 2023.""",
+    },
+    {
+        "title": "Educational Visit to Rani Kamalapati Palace",
+        "event_date": date(2023, 7, 19),
+        "location": "Rani Kamalapati Palace, Bhopal, Madhya Pradesh",
+        "description": """GSSKS organised an educational exposure visit to Rani Kamalapati Palace on 19 July 2023. The visit gave children an opportunity to learn beyond the classroom and engage with a local heritage site.
+
+Educational visits help connect classroom learning with the history, culture and places of the city. The outing also provided a shared recreational experience and encouraged curiosity, observation and peer participation.
+
+Programme focus: educational exposure, local heritage, experiential learning and recreation.""",
+    },
+    {
+        "title": "Independence Day Celebration",
+        "event_date": date(2023, 8, 15),
+        "location": "GSSKS Open Shelter Home, Bhopal, Madhya Pradesh",
+        "description": """Children at the Open Shelter Home took part in an Independence Day celebration. The programme provided a shared setting for children to participate in a national occasion, learn about its significance and express a sense of belonging.
+
+National-day observances form part of the centre's cultural and recreational activities, alongside learning, sports and creative participation.
+
+Programme focus: civic awareness, cultural participation, group activities and national-day learning.""",
+    },
+    {
+        "title": "Gandhi Jayanti – Values and Community Learning",
+        "event_date": date(2023, 10, 2),
+        "location": "GSSKS Open Shelter Home, Bhopal, Madhya Pradesh",
+        "description": """GSSKS marked Gandhi Jayanti through a centre-based activity for children. The observance provided an opportunity to introduce values associated with the day, encourage discussion and create a shared learning experience.
+
+The programme formed part of the centre's wider calendar of cultural, educational and recreational activities designed to support participation and personal development.
+
+Programme focus: values-based learning, cultural awareness and child participation.""",
+    },
+    {
+        "title": "Children's Day Celebration",
+        "event_date": date(2023, 11, 14),
+        "location": "GSSKS Open Shelter Home, Bhopal, Madhya Pradesh",
+        "description": """Children's Day was observed with activities that brought children together for participation, recreation and celebration. The centre's programme records also describe games, cultural activities and the distribution of learning materials and prizes during the reporting period.
+
+The celebration placed children at the centre of the day and created space for enjoyment, confidence-building and positive interaction with peers and caregivers.
+
+Programme focus: child participation, recreation, cultural activities and encouragement.""",
+    },
+    {
+        "title": "Christmas Day Educational and Recreational Outing",
+        "event_date": date(2023, 12, 25),
+        "location": "People's Mall, Bhopal, Madhya Pradesh",
+        "description": """Children took part in a Christmas Day outing to People's Mall on 25 December 2023. The visit offered a change of environment and an opportunity for recreation, shared experiences and learning outside the shelter setting.
+
+Educational and recreational outings are part of the programme's broader approach to holistic development, helping children experience public spaces, participate in group activities and build positive memories in a safe, organised setting.
+
+Programme focus: recreation, social participation, exposure and group learning.""",
+    },
+    {
+        "title": "Gandhi Shilp Bazaar – Artisan Exhibition 2024",
+        "event_date": date(2024, 9, 11),
+        "location": "Urban Haat, Gauhar Mahal, Bhopal, Madhya Pradesh",
+        "description": """Gyan Path Shiksha Evam Samaj Kalyan Samiti conducted the seven-day Gandhi Shilp Bazaar from 11 to 17 September 2024 at Urban Haat, Gauhar Mahal, Bhopal, under the MSS of the Ministry of Textiles, Government of India.
+
+The exhibition brought together 50 artisans and presented a wide range of traditional products and crafts to the public. The displayed product range included jute products, Assam bamboo products, dry-stone work, handmade bedsheets, Madhubani paintings, silk sarees, jute and POP pottery, patchwork, zari work, paintings and woollen or fibre-yarn crafts.
+
+The event created a public-facing platform for artisans to present their work, engage with visitors and generate sales. Reported sales during the seven-day programme exceeded ₹14,95,577.
+
+Programme focus: artisan visibility, traditional craft promotion, market access and livelihood support.
+
+Duration: 11–17 September 2024. The event listing uses the opening date; the programme ran for seven days.""",
+    },
+    {
+        "title": "International Yoga Day – Wellbeing and Participation",
+        "event_date": date(2024, 6, 21),
+        "location": "GSSKS Open Shelter Home, Bhopal, Madhya Pradesh",
+        "description": """Children participated in an International Yoga Day activity as part of the centre's health, fitness and recreational programme. The observance introduced children to movement, physical wellbeing and the value of making time for healthy routines.
+
+The activity complemented the programme's ongoing focus on health check-ups, nutrition, sports and physical fitness, while encouraging children to participate together.
+
+Programme focus: physical wellbeing, healthy habits, participation and recreation.""",
+    },
+    {
+        "title": "Diwali Celebration at the Open Shelter Home",
+        "event_date": None,
+        "location": "GSSKS Open Shelter Home, Bhopal, Madhya Pradesh",
+        "description": """Children celebrated Diwali at the Open Shelter Home through a centre-based cultural activity. The celebration formed part of the programme's annual calendar of festivals and shared occasions, creating an opportunity for children to participate in a familiar community celebration in a supportive setting.
+
+Programme focus: cultural participation, belonging, recreation and shared celebration.
+
+Reporting period: 2024–25. The programme record does not specify the exact date of the centre celebration.""",
+    },
+    {
+        "title": "Cleanliness and Safe-Surroundings Drive",
+        "event_date": None,
+        "location": "GSSKS Open Shelter Home, Bhopal, Madhya Pradesh",
+        "description": """Children took part in cleanliness activities within the shelter-home environment. The activity encouraged shared responsibility for maintaining clean, orderly and welcoming spaces and connected everyday habits with health and wellbeing.
+
+Programme focus: hygiene awareness, responsibility, teamwork and care for shared surroundings.
+
+Reporting period: 2024–25. The programme record does not specify an individual event date.""",
+    },
+    {
+        "title": "Creative Learning and Rangoli Activities",
+        "event_date": None,
+        "location": "GSSKS Open Shelter Home, Bhopal, Madhya Pradesh",
+        "description": """Creative activities including painting and rangoli gave children opportunities to express ideas, practise fine-motor skills and participate in group learning. These activities formed part of the centre's recreational and personality-development programme.
+
+Programme focus: creativity, expression, participation and confidence-building.
+
+Reporting period: 2024–25. The programme record does not specify an individual event date.""",
+    },
+    {
+        "title": "Employment-Oriented and Vocational Skills Training",
+        "event_date": None,
+        "location": "GSSKS Open Shelter Home, Bhopal, Madhya Pradesh",
+        "description": """The 2024–25 programme record includes employment-oriented training for children. This work sits within the shelter programme's broader skill-development approach, which describes basic computer training, exposure to crafts or trade skills, career guidance and pre-employment learning, particularly for adolescents.
+
+The intention is to help young people build practical capabilities and become better prepared for future education, training and livelihood pathways.
+
+Programme focus: practical skills, vocational exposure, career awareness and preparation for future opportunities.
+
+Reporting period: 2024–25. Specific training dates and course titles are not stated in the programme record.""",
+    },
+]
+
+
+def seed_gssks_events():
+    """Add verified programme entries once; never overwrite administrator edits."""
+    created = 0
+    for item in EVENTS:
+        existing = Event.query.filter_by(title=item["title"]).first()
+        if existing:
+            continue
+        db.session.add(Event(
+            title=item["title"],
+            event_date=item["event_date"],
+            location=item["location"],
+            description=item["description"],
+            status="Completed",
+            registration_enabled=False,
+        ))
+        created += 1
+    if created:
+        db.session.commit()
+    return created
