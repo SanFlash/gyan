@@ -194,9 +194,25 @@ Reporting period: 2024–25.""",
 def seed_gssks_events():
     """Add verified programme entries once; never overwrite administrator edits."""
     created = 0
+    updated = 0
     for item in EVENTS:
         existing = Event.query.filter_by(title=item["title"]).first()
         if existing:
+            changed = False
+            if len((existing.description or "").strip()) < 300:
+                existing.description = item["description"]
+                changed = True
+            if not existing.location and item["location"]:
+                existing.location = item["location"]
+                changed = True
+            if existing.event_date is None and item["event_date"] is not None:
+                existing.event_date = item["event_date"]
+                changed = True
+            if not existing.status:
+                existing.status = "Completed"
+                changed = True
+            if changed:
+                updated += 1
             continue
         db.session.add(Event(
             title=item["title"],
@@ -207,7 +223,7 @@ def seed_gssks_events():
             registration_enabled=False,
         ))
         created += 1
-    if created:
+    if created or updated:
         db.session.commit()
 
     # A complete project page for the verified 2024 artisan exhibition.
@@ -244,4 +260,4 @@ The exhibition provided artisans with a shared platform to display their product
         )
         db.session.add(brief)
         db.session.commit()
-    return created
+    return created + updated
